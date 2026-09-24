@@ -31,6 +31,7 @@
   .card-title:hover { color: var(--accent); }
   .card-price { font-size: 20px; font-weight: 700; }
   .price-eur-note { font-size: 11px; color: var(--text-dim); margin-top: -4px; }
+  .sold-price-note { font-size: 11px; color: var(--red); font-weight: 600; }
   .price-history { font-size: 11px; color: var(--text-dim); }
   .price-history.price-down { color: var(--green); }
   .price-history.price-up { color: var(--red); }
@@ -42,489 +43,30 @@
 </head>
 <body>
   <h1>🚗 VW Arteon R-Line monitor</h1>
-  <div class="subtitle">Naposledy aktualizované: 2026-09-24 12:16 UTC · 43 aktívnych · 0 predaných/stiahnutých</div>
+  <div class="subtitle">Naposledy aktualizované: 2026-09-24 18:58 UTC · 5 aktívnych · 40 predaných/stiahnutých</div>
   <div class="controls">
-    <button class="filter-btn active" data-filter="active">Aktívne (43)</button>
-    <button class="filter-btn" data-filter="all">Všetky (43)</button>
-    <button class="filter-btn" data-filter="sold">Predané (0)</button>
+    <button class="filter-btn active" data-filter="active">Aktívne (5)</button>
+    <button class="filter-btn" data-filter="all">Všetky (45)</button>
+    <button class="filter-btn" data-filter="sold">Predané (40)</button>
     <button id="sort-price" class="sort-btn active">Zoradiť: cena ↑</button>
   </div>
   <div id="grid" class="grid">
     
-    <div class="card " data-price="19000.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195383304/volkswagen-arteon-shooting-brake-20-tdi-r-line-4motion.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/304/195383304.jpg?t=1789742642" alt="Volkswagen Arteon Shooting Brake 2.0 TDI R-Line 4MOTION" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195383304/volkswagen-arteon-shooting-brake-20-tdi-r-line-4motion.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake 2.0 TDI R-Line 4MOTION</a>
-        <div class="card-price">19 000 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Trebišov 075 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="19990.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195680128/volkswagen-arteon-r-line-20tdi-4x4-dsg-shooting-brake.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/128/195680128.jpg?t=1789764450" alt="VOLKSWAGEN ARTEON R-LINE 2.0TDI 4x4 DSG SHOOTING BRAKE" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195680128/volkswagen-arteon-r-line-20tdi-4x4-dsg-shooting-brake.php" target="_blank" rel="noopener" class="card-title">VOLKSWAGEN ARTEON R-LINE 2.0TDI 4x4 DSG SHOOTING BRAKE</a>
-        <div class="card-price">19 990 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>biel</span> ·
-          <span>Košice 040 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="19990.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195508056/volkswagen-arteon-r-line-160kw-benzinhybrid.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/056/195508056.jpg?t=1789319952" alt="Volkswagen Arteon R-Line 160kW (benzin+hybrid)" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195508056/volkswagen-arteon-r-line-160kw-benzinhybrid.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon R-Line 160kW (benzin+hybrid)</a>
-        <div class="card-price">19 990 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Nitra 951 35</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="19990.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/194422797/volkswagen-arteon-20tdi-sport-4motion-r-line.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/797/194422797.jpg" alt="Volkswagen Arteon 2.0Tdi SPORT 4Motion R-Line" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/194422797/volkswagen-arteon-20tdi-sport-4motion-r-line.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0Tdi SPORT 4Motion R-Line</a>
-        <div class="card-price">19 990 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Kysucké Nové Mesto 024 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="20499.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195680068/volkswagen-arteon-sb-r-line-20-tdi-110kw-2023-tazne.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/068/195680068.jpg?t=1789914152" alt="Volkswagen Arteon SB 3xR-Line 2.0 TDI 110kw 2023 ťažné" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195680068/volkswagen-arteon-sb-r-line-20-tdi-110kw-2023-tazne.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB 3xR-Line 2.0 TDI 110kw 2023 ťažné</a>
-        <div class="card-price">20 499 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Topoľčany 955 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="20894.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/194456193/volkswagen-arteon-sb-20-tdi-4motion-r-line-dsg-dph.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/193/194456193.jpg?t=1788601416" alt="Volkswagen Arteon SB 2.0 TDI 4Motion R-Line DSG, DPH" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/194456193/volkswagen-arteon-sb-20-tdi-4motion-r-line-dsg-dph.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB 2.0 TDI 4Motion R-Line DSG, DPH</a>
-        <div class="card-price">20 894 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Žilina 010 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="20990.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195646879/volkswagen-arteon-sb-20-tdi-dsg-rline.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/879/195646879.jpg?t=1789672536" alt="Volkswagen Arteon SB 2.0 TDI DSG Rline" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195646879/volkswagen-arteon-sb-20-tdi-dsg-rline.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB 2.0 TDI DSG Rline</a>
-        <div class="card-price">20 990 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Nitra 949 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="21000.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195421628/volkswagen-arteon-20-tdi-140kw-4motion-dsg-r-line.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/628/195421628.jpg" alt="Volkswagen Arteon 2.0 TDI 140kw 4Motion DSG R-Line" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195421628/volkswagen-arteon-20-tdi-140kw-4motion-dsg-r-line.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TDI 140kw 4Motion DSG R-Line</a>
-        <div class="card-price">21 000 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Bánovce nad Bebravou 957 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="21500.0" data-year="2021" data-km="64240">
-      <a href="https://auto.bazos.sk/inzerat/194860991/arteon-r-line-20tdi.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/991/194860991.jpg?t=1788897094" alt="Arteon r line  2.0tdi" loading="lazy" onerror="this.style.opacity=0.3">
+    <div class="card " data-price="22900.0" data-year="0" data-km="0">
+      <a href="https://auto.bazos.sk/inzerat/195359996/vw-arteon-r-line-200kw-benzin.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/996/195359996.jpg?t=1788926888" alt="VW Arteon R-line  200kw benzín" loading="lazy" onerror="this.style.opacity=0.3">
       </a>
       <div class="card-body">
         <div class="badges"><span class="badge badge-warn">Skontroluj fotky (facelift?)</span></div>
-        <a href="https://auto.bazos.sk/inzerat/194860991/arteon-r-line-20tdi.php" target="_blank" rel="noopener" class="card-title">Arteon r line  2.0tdi</a>
-        <div class="card-price">21 500 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2021</span> ·
-          <span>64 240 km</span> ·
-          <span>strieborn</span> ·
-          <span>Čadca 023 02</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="21990.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/194297930/volkswagen-arteon-shooting-brake-20-tdi-r-line-147-kw.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/930/194297930.jpg?t=1785901953" alt="Volkswagen Arteon Shooting Brake R-Line 2.0 TDI 147 kw" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/194297930/volkswagen-arteon-shooting-brake-20-tdi-r-line-147-kw.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake R-Line 2.0 TDI 147 kw</a>
-        <div class="card-price">21 990 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Poprad 058 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="21999.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/194659096/volkswagen-arteon-shooting-brake-sb-14-tsi-ehybrid-218k-r-l.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/096/194659096.jpg?t=1787168363" alt="Volkswagen Arteon Shooting Brake SB 1.4 TSI eHybrid 218k R-L" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/194659096/volkswagen-arteon-shooting-brake-sb-14-tsi-ehybrid-218k-r-l.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake SB 1.4 TSI eHybrid 218k R-L</a>
-        <div class="card-price">21 999 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Senec 903 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="22490.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195845869/volkswagen-arteon-shooting-brake-20-tdi-r-line-4motion-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/869/195845869.jpg?t=1790193056" alt="Volkswagen Arteon Shooting Brake 2.0 TDI R-line 4Motion DSG" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195845869/volkswagen-arteon-shooting-brake-20-tdi-r-line-4motion-dsg.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake 2.0 TDI R-line 4Motion DSG</a>
-        <div class="card-price">22 490 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Ilava 019 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="22900.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195299208/volkswagen-arteon-20-tdi-r-line-4motion-dsg-240k.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/208/195299208.jpg" alt="Volkswagen Arteon 2.0 TDI R-Line 4Motion DSG 240k" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195299208/volkswagen-arteon-20-tdi-r-line-4motion-dsg-240k.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TDI R-Line 4Motion DSG 240k</a>
+        <a href="https://auto.bazos.sk/inzerat/195359996/vw-arteon-r-line-200kw-benzin.php" target="_blank" rel="noopener" class="card-title">VW Arteon R-line  200kw benzín</a>
         <div class="card-price">22 900 EUR</div>
         
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Banská Bystrica 974 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="22990.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/194412165/volkswagen-arteon-shooting-brake-r-line.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/165/194412165.jpg?t=1787863785" alt="Volkswagen Arteon Shooting Brake R-Line" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/194412165/volkswagen-arteon-shooting-brake-r-line.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake R-Line</a>
-        <div class="card-price">22 990 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>strieborn</span> ·
-          <span>Bratislava 821 04</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="23000.0" data-year="0" data-km="111000">
-      <a href="https://auto.bazos.sk/inzerat/194272687/predam-volkswagen-arteon.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/687/194272687.jpg" alt="Predám Volkswagen Arteon" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"><span class="badge badge-warn">Skontroluj fotky (facelift?)</span></div>
-        <a href="https://auto.bazos.sk/inzerat/194272687/predam-volkswagen-arteon.php" target="_blank" rel="noopener" class="card-title">Predám Volkswagen Arteon</a>
-        <div class="card-price">23 000 EUR</div>
         
         
         <div class="card-meta">
           <span>?</span> ·
-          <span>111 000 km</span> ·
+          <span>? km</span> ·
           <span>farba ?</span> ·
-          <span>Galanta 924 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="23500.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195456895/volkswagen-arteon-shooting-brake-r-line-4x4-tazne-ecv.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/895/195456895.jpg" alt="Volkswagen Arteon Shooting Brake R-line 4x4 Ťažné EČV" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195456895/volkswagen-arteon-shooting-brake-r-line-4x4-tazne-ecv.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake R-line 4x4 Ťažné EČV</a>
-        <div class="card-price">23 500 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Banská Bystrica 974 05</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="23690.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195420757/volkswagen-arteon-shooting-brake-sb-20-tdi-r-line-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/757/195420757.jpg" alt="Volkswagen Arteon Shooting Brake SB 2.0 TDI R-Line DSG" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195420757/volkswagen-arteon-shooting-brake-sb-20-tdi-r-line-dsg.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake SB 2.0 TDI R-Line DSG</a>
-        <div class="card-price">23 690 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>strieborn</span> ·
-          <span>Šaľa 951 32</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="23890.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195713118/volkswagen-arteon-shooting-brake-r-line-4motion-147kw.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/118/195713118.jpg?t=1789894329" alt="Volkswagen Arteon Shooting Brake R-line 4motion 147kW" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195713118/volkswagen-arteon-shooting-brake-r-line-4motion-147kw.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake R-line 4motion 147kW</a>
-        <div class="card-price">23 890 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Prievidza 972 51</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="23900.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195758150/volkswagen-arteon-shooting-brake-20-tdi.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/150/195758150.jpg?t=1790239361" alt="Volkswagen Arteon Shooting brake 2.0 TDi" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195758150/volkswagen-arteon-shooting-brake-20-tdi.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting brake 2.0 TDi</a>
-        <div class="card-price">23 900 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Zlaté Moravce 953 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="23990.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195070977/volkswagen-arteon-sb-20-tdi-4motion-r-line-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/977/195070977.jpg?t=1790075704" alt="Volkswagen Arteon SB 2.0 TDI 4Motion R-Line DSG" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195070977/volkswagen-arteon-sb-20-tdi-4motion-r-line-dsg.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB 2.0 TDI 4Motion R-Line DSG</a>
-        <div class="card-price">23 990 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>strieborn</span> ·
-          <span>Šaľa 951 32</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="23990.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/194675958/volkswagen-arteon-20-tdi-r-line-4motion-dsg-odpocet-dph.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/958/194675958.jpg?t=1786973938" alt="Volkswagen Arteon 2.0 TDI R-Line 4Motion DSG - odpočet DPH" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/194675958/volkswagen-arteon-20-tdi-r-line-4motion-dsg-odpocet-dph.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TDI R-Line 4Motion DSG - odpočet DPH</a>
-        <div class="card-price">23 990 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
           <span>Poprad 058 01</span>
         </div>
         <div class="card-footer">
@@ -534,20 +76,21 @@
       </div>
     </div>
 
-    <div class="card " data-price="23990.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195548746/volkswagen-arteon-20-tsi-r-line-4motion-dsg-206kw-a7.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/746/195548746.jpg?t=1790251103" alt="Volkswagen Arteon 2.0 TSI R-Line 4MOTION / DSG / 206kW / A7" loading="lazy" onerror="this.style.opacity=0.3">
+    <div class="card " data-price="23499.0" data-year="0" data-km="110000">
+      <a href="https://auto.bazos.sk/inzerat/195870123/vw-arteon-r-line-20-tsi-206kw-rv2018-4motion.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/123/195870123.jpg?t=1790261269" alt="vw arteon R-line  2.0 tsi 206kw r.v.2018 4motion" loading="lazy" onerror="this.style.opacity=0.3">
       </a>
       <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195548746/volkswagen-arteon-20-tsi-r-line-4motion-dsg-206kw-a7.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TSI R-Line 4MOTION / DSG / 206kW / A7</a>
-        <div class="card-price">23 990 EUR</div>
+        <div class="badges"><span class="badge badge-warn">Skontroluj fotky (facelift?)</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195870123/vw-arteon-r-line-20-tsi-206kw-rv2018-4motion.php" target="_blank" rel="noopener" class="card-title">vw arteon R-line  2.0 tsi 206kw r.v.2018 4motion</a>
+        <div class="card-price">23 499 EUR</div>
+        
         
         
         <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>biel</span> ·
+          <span>?</span> ·
+          <span>110 000 km</span> ·
+          <span>farba ?</span> ·
           <span>Vranov nad Topľou 093 01</span>
         </div>
         <div class="card-footer">
@@ -557,110 +100,19 @@
       </div>
     </div>
 
-    <div class="card " data-price="23990.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/194446928/volkswagen-arteon-sb-rline-4motion-webasto-virtual-ambient.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/928/194446928.jpg?t=1788718762" alt="Volkswagen Arteon SB rline 4motion webasto virtual ambient" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/194446928/volkswagen-arteon-sb-rline-4motion-webasto-virtual-ambient.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB rline 4motion webasto virtual ambient</a>
-        <div class="card-price">23 990 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Čadca 022 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="23990.0" data-year="2023" data-km="119584">
-      <a href="https://auto.bazos.sk/inzerat/194497363/volkswagen-arteon-20-tdi-r-line-dsgpanorama.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/363/194497363.jpg?t=1788336428" alt="Volkswagen Arteon 2.0 TDI R-Line DSG/Panoráma|110 kW| 8/2020" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/194497363/volkswagen-arteon-20-tdi-r-line-dsgpanorama.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TDI R-Line DSG/Panoráma|110 kW| 8/2020</a>
-        <div class="card-price">23 990 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>119 584 km</span> ·
-          <span>biel</span> ·
-          <span>Nové Zámky 940 02</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="23999.0" data-year="2024" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195043442/volkswagen-arteon-r-line-147kw-dsgvirtualkessy.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/442/195043442.jpg" alt="Volkswagen arteon R-line 147kw dsg,virtual,kessy" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195043442/volkswagen-arteon-r-line-147kw-dsgvirtualkessy.php" target="_blank" rel="noopener" class="card-title">Volkswagen arteon R-line 147kw dsg,virtual,kessy</a>
-        <div class="card-price">23 999 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2024</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Námestovo 029 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="24500.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195513207/volkswagen-arteon-sb-20-tdi-r-line-dsg-147kw-200hp-a7.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/207/195513207.jpg?t=1789741302" alt="Volkswagen Arteon SB 2.0 TDI R-Line DSG 147kW 200HP A7" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195513207/volkswagen-arteon-sb-20-tdi-r-line-dsg-147kw-200hp-a7.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB 2.0 TDI R-Line DSG 147kW 200HP A7</a>
-        <div class="card-price">24 500 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Bratislava 851 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="24900.0" data-year="2023" data-km="106146">
+    <div class="card " data-price="24900.0" data-year="0" data-km="106146">
       <a href="https://auto.bazos.sk/inzerat/195864839/volkswagen-arteon-20-tsi-r-line-dsg-nove-brzdy-a-tlmice.php" target="_blank" rel="noopener" class="card-photo-link">
         <img class="card-photo" src="https://www.bazos.sk/img/1t/839/195864839.jpg?t=1790250367" alt="Volkswagen Arteon 2.0 TSI R-Line DSG | Nové brzdy a tlmiče" loading="lazy" onerror="this.style.opacity=0.3">
       </a>
       <div class="card-body">
-        <div class="badges"></div>
+        <div class="badges"><span class="badge badge-warn">Skontroluj fotky (facelift?)</span></div>
         <a href="https://auto.bazos.sk/inzerat/195864839/volkswagen-arteon-20-tsi-r-line-dsg-nove-brzdy-a-tlmice.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TSI R-Line DSG | Nové brzdy a tlmiče</a>
         <div class="card-price">24 900 EUR</div>
         
         
+        
         <div class="card-meta">
-          <span>2023</span> ·
+          <span>?</span> ·
           <span>106 146 km</span> ·
           <span>biel</span> ·
           <span>Púchov 020 01</span>
@@ -672,30 +124,7 @@
       </div>
     </div>
 
-    <div class="card " data-price="24950.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195631342/volkswagen-arteon-shooting-brake-20-tdi-r-line-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/342/195631342.jpg" alt="VOLKSWAGEN ARTEON SHOOTING BRAKE 2.0 TDI R-LINE DSG" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195631342/volkswagen-arteon-shooting-brake-20-tdi-r-line-dsg.php" target="_blank" rel="noopener" class="card-title">VOLKSWAGEN ARTEON SHOOTING BRAKE 2.0 TDI R-LINE DSG</a>
-        <div class="card-price">24 950 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Nitra 949 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="24990.0" data-year="2023" data-km="44079">
+    <div class="card " data-price="24990.0" data-year="2022" data-km="98575">
       <a href="https://auto.bazos.sk/inzerat/195439833/volkswagen-arteon-20-tsi-bmt-r-line-dsg-a7-140kw-190hp.php" target="_blank" rel="noopener" class="card-photo-link">
         <img class="card-photo" src="https://www.bazos.sk/img/1t/833/195439833.jpg?t=1789734437" alt="Volkswagen Arteon 2.0 TSI BMT R-Line DSG A7 140kW 190HP" loading="lazy" onerror="this.style.opacity=0.3">
       </a>
@@ -705,241 +134,12 @@
         <div class="card-price">24 990 EUR</div>
         
         
+        
         <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
+          <span>2022</span> ·
+          <span>98 575 km</span> ·
           <span>biel</span> ·
           <span>Košice 040 11</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="25400.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/194203783/volkswagen-arteon-sb-20-tdi-r-line-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/783/194203783.jpg" alt="Volkswagen Arteon SB 2.0 TDI R-Line DSG" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/194203783/volkswagen-arteon-sb-20-tdi-r-line-dsg.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB 2.0 TDI R-Line DSG</a>
-        <div class="card-price">25 400 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Nové Zámky 940 02</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="25490.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/194698550/volkswagen-arteon-20-tdi-r-line-4motion-dsg-176kw.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/550/194698550.jpg?t=1789390172" alt="Volkswagen Arteon 2.0 TDI R-Line 4Motion DSG 176kW" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/194698550/volkswagen-arteon-20-tdi-r-line-4motion-dsg-176kw.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TDI R-Line 4Motion DSG 176kW</a>
-        <div class="card-price">25 490 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Liptovský Mikuláš 031 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="25500.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195778499/volkswagen-arteon-shooting-brake-20-tsi-r-line-dsg-140kw.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/499/195778499.jpg?t=1790025789" alt="Volkswagen Arteon Shooting Brake 2.0 TSI R-Line DSG 140kW" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195778499/volkswagen-arteon-shooting-brake-20-tsi-r-line-dsg-140kw.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake 2.0 TSI R-Line DSG 140kW</a>
-        <div class="card-price">25 500 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>biel</span> ·
-          <span>Topoľčany 955 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="26490.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195077763/volkswagen-arteon-shooting-brake-sb-20-tdi-200ps-r-line-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/763/195077763.jpg" alt="Volkswagen Arteon Shooting Brake SB 2.0 TDI 200PS R-Line DSG" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195077763/volkswagen-arteon-shooting-brake-sb-20-tdi-200ps-r-line-dsg.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake SB 2.0 TDI 200PS R-Line DSG</a>
-        <div class="card-price">26 490 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Banská Bystrica 974 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="26990.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195150606/volkswagen-arteon-shooting-brake-20-tdi-r-line-147-kw.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/606/195150606.jpg?t=1790075886" alt="Volkswagen Arteon Shooting Brake 2.0 TDi R-line 147 kW" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195150606/volkswagen-arteon-shooting-brake-20-tdi-r-line-147-kw.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake 2.0 TDi R-line 147 kW</a>
-        <div class="card-price">26 990 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Žilina 013 13</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="27350.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195833650/volkswagen-arteon-20tsi-r-line-sb-1maj-cr-dph.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/650/195833650.jpg" alt="Volkswagen Arteon, 2.0TSi R-Line SB 1maj. ČR DPH" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195833650/volkswagen-arteon-20tsi-r-line-sb-1maj-cr-dph.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon, 2.0TSi R-Line SB 1maj. ČR DPH</a>
-        <div class="card-price">27 350 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Česká republika 110 00</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="27490.0" data-year="2023" data-km="62000">
-      <a href="https://auto.bazos.sk/inzerat/194821753/volkswagen-arteon-r-line-sb-147kw-4x4-62000-km.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/753/194821753.jpg?t=1789739803" alt="Volkswagen arteon 3x R-Line SB 2TDi 147kw 4motion 62000 km" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/194821753/volkswagen-arteon-r-line-sb-147kw-4x4-62000-km.php" target="_blank" rel="noopener" class="card-title">Volkswagen arteon 3x R-Line SB 2TDi 147kw 4motion 62000 km</a>
-        <div class="card-price">27 490 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>62 000 km</span> ·
-          <span>čierna</span> ·
-          <span>Martin 036 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="27490.0" data-year="2023" data-km="92000">
-      <a href="https://auto.bazos.sk/inzerat/195814716/volkswagen-arteon-20-tdi-scr-bmt-190k-r-line-4motion-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/716/195814716.jpg" alt="Volkswagen Arteon 2.0 TDI SCR BMT 190k R-Line 4MOTION DSG" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195814716/volkswagen-arteon-20-tdi-scr-bmt-190k-r-line-4motion-dsg.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TDI SCR BMT 190k R-Line 4MOTION DSG</a>
-        <div class="card-price">27 490 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>92 000 km</span> ·
-          <span>biel</span> ·
-          <span>Žilina 010 01</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="27490.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/194018892/volkswagen-arteon-shooting-brake-20-tdi-200ps-4motion-r-lin.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/892/194018892.jpg" alt="Arteon Shooting Brake 2.0 TDI 200PS 4MOTION R-Line DSG" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/194018892/volkswagen-arteon-shooting-brake-20-tdi-200ps-4motion-r-lin.php" target="_blank" rel="noopener" class="card-title">Arteon Shooting Brake 2.0 TDI 200PS 4MOTION R-Line DSG</a>
-        <div class="card-price">27 490 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>strieborn</span> ·
-          <span>Banská Bystrica 974 05</span>
-        </div>
-        <div class="card-footer">
-          <span class="source-tag">bazos_sk</span>
-          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card " data-price="27699.0" data-year="2023" data-km="44079">
-      <a href="https://auto.bazos.sk/inzerat/195774280/volkswagen-arteon-20-tsi-dsg-58tiskm.php" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="https://www.bazos.sk/img/1t/280/195774280.jpg?t=1790013748" alt="VOLKSWAGEN ARTEON 2.0 TSI DSG 58TIS.KM" loading="lazy" onerror="this.style.opacity=0.3">
-      </a>
-      <div class="card-body">
-        <div class="badges"></div>
-        <a href="https://auto.bazos.sk/inzerat/195774280/volkswagen-arteon-20-tsi-dsg-58tiskm.php" target="_blank" rel="noopener" class="card-title">VOLKSWAGEN ARTEON 2.0 TSI DSG 58TIS.KM</a>
-        <div class="card-price">27 699 EUR</div>
-        
-        
-        <div class="card-meta">
-          <span>2023</span> ·
-          <span>44 079 km</span> ·
-          <span>čierna</span> ·
-          <span>Košice 040 01</span>
         </div>
         <div class="card-footer">
           <span class="source-tag">bazos_sk</span>
@@ -958,6 +158,7 @@
         <div class="card-price">27 799 EUR</div>
         
         
+        
         <div class="card-meta">
           <span>2021</span> ·
           <span>58 000 km</span> ·
@@ -971,15 +172,904 @@
       </div>
     </div>
 
-    <div class="card " data-price="650000.0" data-year="2022" data-km="64240">
+    <div class="card card-sold" data-price="19000.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195383304/volkswagen-arteon-shooting-brake-20-tdi-r-line-4motion.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/304/195383304.jpg?t=1789742642" alt="Volkswagen Arteon Shooting Brake 2.0 TDI R-Line 4MOTION" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195383304/volkswagen-arteon-shooting-brake-20-tdi-r-line-4motion.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake 2.0 TDI R-Line 4MOTION</a>
+        <div class="card-price">19 000 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Trebišov 075 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="19990.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195680128/volkswagen-arteon-r-line-20tdi-4x4-dsg-shooting-brake.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/128/195680128.jpg?t=1789764450" alt="VOLKSWAGEN ARTEON R-LINE 2.0TDI 4x4 DSG SHOOTING BRAKE" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195680128/volkswagen-arteon-r-line-20tdi-4x4-dsg-shooting-brake.php" target="_blank" rel="noopener" class="card-title">VOLKSWAGEN ARTEON R-LINE 2.0TDI 4x4 DSG SHOOTING BRAKE</a>
+        <div class="card-price">19 990 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>biel</span> ·
+          <span>Košice 040 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="19990.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195508056/volkswagen-arteon-r-line-160kw-benzinhybrid.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/056/195508056.jpg?t=1789319952" alt="Volkswagen Arteon R-Line 160kW (benzin+hybrid)" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195508056/volkswagen-arteon-r-line-160kw-benzinhybrid.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon R-Line 160kW (benzin+hybrid)</a>
+        <div class="card-price">19 990 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Nitra 951 35</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="19990.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/194422797/volkswagen-arteon-20tdi-sport-4motion-r-line.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/797/194422797.jpg" alt="Volkswagen Arteon 2.0Tdi SPORT 4Motion R-Line" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194422797/volkswagen-arteon-20tdi-sport-4motion-r-line.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0Tdi SPORT 4Motion R-Line</a>
+        <div class="card-price">19 990 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Kysucké Nové Mesto 024 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="20499.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195680068/volkswagen-arteon-sb-r-line-20-tdi-110kw-2023-tazne.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/068/195680068.jpg?t=1789914152" alt="Volkswagen Arteon SB 3xR-Line 2.0 TDI 110kw 2023 ťažné" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195680068/volkswagen-arteon-sb-r-line-20-tdi-110kw-2023-tazne.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB 3xR-Line 2.0 TDI 110kw 2023 ťažné</a>
+        <div class="card-price">20 499 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Topoľčany 955 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="20894.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/194456193/volkswagen-arteon-sb-20-tdi-4motion-r-line-dsg-dph.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/193/194456193.jpg?t=1788601416" alt="Volkswagen Arteon SB 2.0 TDI 4Motion R-Line DSG, DPH" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194456193/volkswagen-arteon-sb-20-tdi-4motion-r-line-dsg-dph.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB 2.0 TDI 4Motion R-Line DSG, DPH</a>
+        <div class="card-price">20 894 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Žilina 010 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="20990.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195646879/volkswagen-arteon-sb-20-tdi-dsg-rline.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/879/195646879.jpg?t=1789672536" alt="Volkswagen Arteon SB 2.0 TDI DSG Rline" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195646879/volkswagen-arteon-sb-20-tdi-dsg-rline.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB 2.0 TDI DSG Rline</a>
+        <div class="card-price">20 990 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Nitra 949 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="21000.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195421628/volkswagen-arteon-20-tdi-140kw-4motion-dsg-r-line.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/628/195421628.jpg" alt="Volkswagen Arteon 2.0 TDI 140kw 4Motion DSG R-Line" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195421628/volkswagen-arteon-20-tdi-140kw-4motion-dsg-r-line.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TDI 140kw 4Motion DSG R-Line</a>
+        <div class="card-price">21 000 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Bánovce nad Bebravou 957 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="21500.0" data-year="2021" data-km="64240">
+      <a href="https://auto.bazos.sk/inzerat/194860991/arteon-r-line-20tdi.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/991/194860991.jpg?t=1788897094" alt="Arteon r line  2.0tdi" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span><span class="badge badge-warn">Skontroluj fotky (facelift?)</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194860991/arteon-r-line-20tdi.php" target="_blank" rel="noopener" class="card-title">Arteon r line  2.0tdi</a>
+        <div class="card-price">21 500 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2021</span> ·
+          <span>64 240 km</span> ·
+          <span>strieborn</span> ·
+          <span>Čadca 023 02</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="21990.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/194297930/volkswagen-arteon-shooting-brake-20-tdi-r-line-147-kw.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/930/194297930.jpg?t=1785901953" alt="Volkswagen Arteon Shooting Brake R-Line 2.0 TDI 147 kw" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194297930/volkswagen-arteon-shooting-brake-20-tdi-r-line-147-kw.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake R-Line 2.0 TDI 147 kw</a>
+        <div class="card-price">21 990 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Poprad 058 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="21999.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/194659096/volkswagen-arteon-shooting-brake-sb-14-tsi-ehybrid-218k-r-l.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/096/194659096.jpg?t=1787168363" alt="Volkswagen Arteon Shooting Brake SB 1.4 TSI eHybrid 218k R-L" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194659096/volkswagen-arteon-shooting-brake-sb-14-tsi-ehybrid-218k-r-l.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake SB 1.4 TSI eHybrid 218k R-L</a>
+        <div class="card-price">21 999 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Senec 903 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="22490.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195845869/volkswagen-arteon-shooting-brake-20-tdi-r-line-4motion-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/869/195845869.jpg?t=1790193056" alt="Volkswagen Arteon Shooting Brake 2.0 TDI R-line 4Motion DSG" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195845869/volkswagen-arteon-shooting-brake-20-tdi-r-line-4motion-dsg.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake 2.0 TDI R-line 4Motion DSG</a>
+        <div class="card-price">22 490 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Ilava 019 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="22900.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195299208/volkswagen-arteon-20-tdi-r-line-4motion-dsg-240k.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/208/195299208.jpg" alt="Volkswagen Arteon 2.0 TDI R-Line 4Motion DSG 240k" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195299208/volkswagen-arteon-20-tdi-r-line-4motion-dsg-240k.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TDI R-Line 4Motion DSG 240k</a>
+        <div class="card-price">22 900 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Banská Bystrica 974 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="22990.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/194412165/volkswagen-arteon-shooting-brake-r-line.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/165/194412165.jpg?t=1787863785" alt="Volkswagen Arteon Shooting Brake R-Line" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194412165/volkswagen-arteon-shooting-brake-r-line.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake R-Line</a>
+        <div class="card-price">22 990 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>strieborn</span> ·
+          <span>Bratislava 821 04</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="23000.0" data-year="0" data-km="111000">
+      <a href="https://auto.bazos.sk/inzerat/194272687/predam-volkswagen-arteon.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/687/194272687.jpg" alt="Predám Volkswagen Arteon" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span><span class="badge badge-warn">Skontroluj fotky (facelift?)</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194272687/predam-volkswagen-arteon.php" target="_blank" rel="noopener" class="card-title">Predám Volkswagen Arteon</a>
+        <div class="card-price">23 000 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>?</span> ·
+          <span>111 000 km</span> ·
+          <span>farba ?</span> ·
+          <span>Galanta 924 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="23500.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195456895/volkswagen-arteon-shooting-brake-r-line-4x4-tazne-ecv.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/895/195456895.jpg" alt="Volkswagen Arteon Shooting Brake R-line 4x4 Ťažné EČV" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195456895/volkswagen-arteon-shooting-brake-r-line-4x4-tazne-ecv.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake R-line 4x4 Ťažné EČV</a>
+        <div class="card-price">23 500 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Banská Bystrica 974 05</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="23690.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195420757/volkswagen-arteon-shooting-brake-sb-20-tdi-r-line-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/757/195420757.jpg" alt="Volkswagen Arteon Shooting Brake SB 2.0 TDI R-Line DSG" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195420757/volkswagen-arteon-shooting-brake-sb-20-tdi-r-line-dsg.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake SB 2.0 TDI R-Line DSG</a>
+        <div class="card-price">23 690 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>strieborn</span> ·
+          <span>Šaľa 951 32</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="23890.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195713118/volkswagen-arteon-shooting-brake-r-line-4motion-147kw.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/118/195713118.jpg?t=1789894329" alt="Volkswagen Arteon Shooting Brake R-line 4motion 147kW" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195713118/volkswagen-arteon-shooting-brake-r-line-4motion-147kw.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake R-line 4motion 147kW</a>
+        <div class="card-price">23 890 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Prievidza 972 51</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="23900.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195758150/volkswagen-arteon-shooting-brake-20-tdi.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/150/195758150.jpg?t=1790239361" alt="Volkswagen Arteon Shooting brake 2.0 TDi" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195758150/volkswagen-arteon-shooting-brake-20-tdi.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting brake 2.0 TDi</a>
+        <div class="card-price">23 900 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Zlaté Moravce 953 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="23990.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195070977/volkswagen-arteon-sb-20-tdi-4motion-r-line-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/977/195070977.jpg?t=1790075704" alt="Volkswagen Arteon SB 2.0 TDI 4Motion R-Line DSG" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195070977/volkswagen-arteon-sb-20-tdi-4motion-r-line-dsg.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB 2.0 TDI 4Motion R-Line DSG</a>
+        <div class="card-price">23 990 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>strieborn</span> ·
+          <span>Šaľa 951 32</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="23990.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/194675958/volkswagen-arteon-20-tdi-r-line-4motion-dsg-odpocet-dph.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/958/194675958.jpg?t=1786973938" alt="Volkswagen Arteon 2.0 TDI R-Line 4Motion DSG - odpočet DPH" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194675958/volkswagen-arteon-20-tdi-r-line-4motion-dsg-odpocet-dph.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TDI R-Line 4Motion DSG - odpočet DPH</a>
+        <div class="card-price">23 990 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Poprad 058 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="23990.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195548746/volkswagen-arteon-20-tsi-r-line-4motion-dsg-206kw-a7.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/746/195548746.jpg?t=1790251103" alt="Volkswagen Arteon 2.0 TSI R-Line 4MOTION / DSG / 206kW / A7" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195548746/volkswagen-arteon-20-tsi-r-line-4motion-dsg-206kw-a7.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TSI R-Line 4MOTION / DSG / 206kW / A7</a>
+        <div class="card-price">23 990 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>biel</span> ·
+          <span>Vranov nad Topľou 093 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="23990.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/194446928/volkswagen-arteon-sb-rline-4motion-webasto-virtual-ambient.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/928/194446928.jpg?t=1788718762" alt="Volkswagen Arteon SB rline 4motion webasto virtual ambient" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194446928/volkswagen-arteon-sb-rline-4motion-webasto-virtual-ambient.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB rline 4motion webasto virtual ambient</a>
+        <div class="card-price">23 990 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Čadca 022 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="23990.0" data-year="2023" data-km="119584">
+      <a href="https://auto.bazos.sk/inzerat/194497363/volkswagen-arteon-20-tdi-r-line-dsgpanorama.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/363/194497363.jpg?t=1788336428" alt="Volkswagen Arteon 2.0 TDI R-Line DSG/Panoráma|110 kW| 8/2020" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194497363/volkswagen-arteon-20-tdi-r-line-dsgpanorama.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TDI R-Line DSG/Panoráma|110 kW| 8/2020</a>
+        <div class="card-price">23 990 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>119 584 km</span> ·
+          <span>biel</span> ·
+          <span>Nové Zámky 940 02</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="23999.0" data-year="2024" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195043442/volkswagen-arteon-r-line-147kw-dsgvirtualkessy.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/442/195043442.jpg" alt="Volkswagen arteon R-line 147kw dsg,virtual,kessy" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195043442/volkswagen-arteon-r-line-147kw-dsgvirtualkessy.php" target="_blank" rel="noopener" class="card-title">Volkswagen arteon R-line 147kw dsg,virtual,kessy</a>
+        <div class="card-price">23 999 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2024</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Námestovo 029 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="24500.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195513207/volkswagen-arteon-sb-20-tdi-r-line-dsg-147kw-200hp-a7.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/207/195513207.jpg?t=1789741302" alt="Volkswagen Arteon SB 2.0 TDI R-Line DSG 147kW 200HP A7" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195513207/volkswagen-arteon-sb-20-tdi-r-line-dsg-147kw-200hp-a7.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB 2.0 TDI R-Line DSG 147kW 200HP A7</a>
+        <div class="card-price">24 500 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Bratislava 851 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="24950.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195631342/volkswagen-arteon-shooting-brake-20-tdi-r-line-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/342/195631342.jpg" alt="VOLKSWAGEN ARTEON SHOOTING BRAKE 2.0 TDI R-LINE DSG" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195631342/volkswagen-arteon-shooting-brake-20-tdi-r-line-dsg.php" target="_blank" rel="noopener" class="card-title">VOLKSWAGEN ARTEON SHOOTING BRAKE 2.0 TDI R-LINE DSG</a>
+        <div class="card-price">24 950 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Nitra 949 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="25400.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/194203783/volkswagen-arteon-sb-20-tdi-r-line-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/783/194203783.jpg" alt="Volkswagen Arteon SB 2.0 TDI R-Line DSG" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194203783/volkswagen-arteon-sb-20-tdi-r-line-dsg.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon SB 2.0 TDI R-Line DSG</a>
+        <div class="card-price">25 400 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Nové Zámky 940 02</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="25490.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/194698550/volkswagen-arteon-20-tdi-r-line-4motion-dsg-176kw.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/550/194698550.jpg?t=1789390172" alt="Volkswagen Arteon 2.0 TDI R-Line 4Motion DSG 176kW" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194698550/volkswagen-arteon-20-tdi-r-line-4motion-dsg-176kw.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TDI R-Line 4Motion DSG 176kW</a>
+        <div class="card-price">25 490 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Liptovský Mikuláš 031 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="25500.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195778499/volkswagen-arteon-shooting-brake-20-tsi-r-line-dsg-140kw.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/499/195778499.jpg?t=1790025789" alt="Volkswagen Arteon Shooting Brake 2.0 TSI R-Line DSG 140kW" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195778499/volkswagen-arteon-shooting-brake-20-tsi-r-line-dsg-140kw.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake 2.0 TSI R-Line DSG 140kW</a>
+        <div class="card-price">25 500 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>biel</span> ·
+          <span>Topoľčany 955 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="26490.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195077763/volkswagen-arteon-shooting-brake-sb-20-tdi-200ps-r-line-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/763/195077763.jpg" alt="Volkswagen Arteon Shooting Brake SB 2.0 TDI 200PS R-Line DSG" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195077763/volkswagen-arteon-shooting-brake-sb-20-tdi-200ps-r-line-dsg.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake SB 2.0 TDI 200PS R-Line DSG</a>
+        <div class="card-price">26 490 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Banská Bystrica 974 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="26990.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195150606/volkswagen-arteon-shooting-brake-20-tdi-r-line-147-kw.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/606/195150606.jpg?t=1790075886" alt="Volkswagen Arteon Shooting Brake 2.0 TDi R-line 147 kW" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195150606/volkswagen-arteon-shooting-brake-20-tdi-r-line-147-kw.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon Shooting Brake 2.0 TDi R-line 147 kW</a>
+        <div class="card-price">26 990 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Žilina 013 13</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="27350.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195833650/volkswagen-arteon-20tsi-r-line-sb-1maj-cr-dph.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/650/195833650.jpg" alt="Volkswagen Arteon, 2.0TSi R-Line SB 1maj. ČR DPH" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195833650/volkswagen-arteon-20tsi-r-line-sb-1maj-cr-dph.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon, 2.0TSi R-Line SB 1maj. ČR DPH</a>
+        <div class="card-price">27 350 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Česká republika 110 00</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="27490.0" data-year="2023" data-km="62000">
+      <a href="https://auto.bazos.sk/inzerat/194821753/volkswagen-arteon-r-line-sb-147kw-4x4-62000-km.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/753/194821753.jpg?t=1789739803" alt="Volkswagen arteon 3x R-Line SB 2TDi 147kw 4motion 62000 km" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194821753/volkswagen-arteon-r-line-sb-147kw-4x4-62000-km.php" target="_blank" rel="noopener" class="card-title">Volkswagen arteon 3x R-Line SB 2TDi 147kw 4motion 62000 km</a>
+        <div class="card-price">27 490 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>62 000 km</span> ·
+          <span>čierna</span> ·
+          <span>Martin 036 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="27490.0" data-year="2023" data-km="92000">
+      <a href="https://auto.bazos.sk/inzerat/195814716/volkswagen-arteon-20-tdi-scr-bmt-190k-r-line-4motion-dsg.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/716/195814716.jpg" alt="Volkswagen Arteon 2.0 TDI SCR BMT 190k R-Line 4MOTION DSG" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195814716/volkswagen-arteon-20-tdi-scr-bmt-190k-r-line-4motion-dsg.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TDI SCR BMT 190k R-Line 4MOTION DSG</a>
+        <div class="card-price">27 490 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>92 000 km</span> ·
+          <span>biel</span> ·
+          <span>Žilina 010 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="27490.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/194018892/volkswagen-arteon-shooting-brake-20-tdi-200ps-4motion-r-lin.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/892/194018892.jpg" alt="Arteon Shooting Brake 2.0 TDI 200PS 4MOTION R-Line DSG" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/194018892/volkswagen-arteon-shooting-brake-20-tdi-200ps-4motion-r-lin.php" target="_blank" rel="noopener" class="card-title">Arteon Shooting Brake 2.0 TDI 200PS 4MOTION R-Line DSG</a>
+        <div class="card-price">27 490 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>strieborn</span> ·
+          <span>Banská Bystrica 974 05</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="27699.0" data-year="2023" data-km="44079">
+      <a href="https://auto.bazos.sk/inzerat/195774280/volkswagen-arteon-20-tsi-dsg-58tiskm.php" target="_blank" rel="noopener" class="card-photo-link">
+        <img class="card-photo" src="https://www.bazos.sk/img/1t/280/195774280.jpg?t=1790013748" alt="VOLKSWAGEN ARTEON 2.0 TSI DSG 58TIS.KM" loading="lazy" onerror="this.style.opacity=0.3">
+      </a>
+      <div class="card-body">
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span></div>
+        <a href="https://auto.bazos.sk/inzerat/195774280/volkswagen-arteon-20-tsi-dsg-58tiskm.php" target="_blank" rel="noopener" class="card-title">VOLKSWAGEN ARTEON 2.0 TSI DSG 58TIS.KM</a>
+        <div class="card-price">27 699 EUR</div>
+        
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
+        
+        <div class="card-meta">
+          <span>2023</span> ·
+          <span>44 079 km</span> ·
+          <span>čierna</span> ·
+          <span>Košice 040 01</span>
+        </div>
+        <div class="card-footer">
+          <span class="source-tag">bazos_sk</span>
+          <span class="dates">videné od 2026-09-24 · naposledy 2026-09-24</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-sold" data-price="650000.0" data-year="2022" data-km="64240">
       <a href="https://auto.bazos.cz/inzerat/224147861/vw-arteon-r-line-14-tsi-ehybrid-160kw-dsg-64tkm-zaruka.php" target="_blank" rel="noopener" class="card-photo-link">
         <img class="card-photo" src="https://www.bazos.cz/img/1t/861/224147861.jpg?t=1790070846" alt="VW Arteon R-Line 1.4 TSI eHybrid 160kW DSG 64tkm - Záruka" loading="lazy" onerror="this.style.opacity=0.3">
       </a>
       <div class="card-body">
-        <div class="badges"><span class="badge badge-info">CZ auto: +~400€ prepis (odhad)</span></div>
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span><span class="badge badge-info">CZ auto: +~400€ prepis (odhad)</span></div>
         <a href="https://auto.bazos.cz/inzerat/224147861/vw-arteon-r-line-14-tsi-ehybrid-160kw-dsg-64tkm-zaruka.php" target="_blank" rel="noopener" class="card-title">VW Arteon R-Line 1.4 TSI eHybrid 160kW DSG 64tkm - Záruka</a>
         <div class="card-price">650 000 CZK</div>
         <div class="price-eur-note">≈ 26 000 € (orientačne)</div>
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
         
         <div class="card-meta">
           <span>2022</span> ·
@@ -994,15 +1084,16 @@
       </div>
     </div>
 
-    <div class="card " data-price="679000.0" data-year="2021" data-km="108980">
+    <div class="card card-sold" data-price="679000.0" data-year="2021" data-km="108980">
       <a href="https://auto.bazos.cz/inzerat/222751355/vw-arteon-tdi-shooting-brake-rline-matrix-kamera-tazne.php" target="_blank" rel="noopener" class="card-photo-link">
         <img class="card-photo" src="https://www.bazos.cz/img/1t/355/222751355.jpg?t=1787226501" alt="VW Arteon TDi Shooting Brake Rline MATRIX KAMERA TAŽNÉ" loading="lazy" onerror="this.style.opacity=0.3">
       </a>
       <div class="card-body">
-        <div class="badges"><span class="badge badge-warn">Skontroluj fotky (facelift?)</span><span class="badge badge-info">CZ auto: +~400€ prepis (odhad)</span></div>
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span><span class="badge badge-warn">Skontroluj fotky (facelift?)</span><span class="badge badge-info">CZ auto: +~400€ prepis (odhad)</span></div>
         <a href="https://auto.bazos.cz/inzerat/222751355/vw-arteon-tdi-shooting-brake-rline-matrix-kamera-tazne.php" target="_blank" rel="noopener" class="card-title">VW Arteon TDi Shooting Brake Rline MATRIX KAMERA TAŽNÉ</a>
         <div class="card-price">679 000 CZK</div>
         <div class="price-eur-note">≈ 27 160 € (orientačne)</div>
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
         
         <div class="card-meta">
           <span>2021</span> ·
@@ -1017,15 +1108,16 @@
       </div>
     </div>
 
-    <div class="card " data-price="695000.0" data-year="2021" data-km="10300">
+    <div class="card card-sold" data-price="695000.0" data-year="2021" data-km="10300">
       <a href="https://auto.bazos.cz/inzerat/223725800/volswagen-arteon-20tdi-147kw-112021-prodlouzena-zaruka.php" target="_blank" rel="noopener" class="card-photo-link">
         <img class="card-photo" src="https://www.bazos.cz/img/1t/800/223725800.jpg?t=1789281314" alt="Volswagen Arteon 2.0Tdi, 147kw, 11/2021, prodloužená záruka" loading="lazy" onerror="this.style.opacity=0.3">
       </a>
       <div class="card-body">
-        <div class="badges"><span class="badge badge-warn">Skontroluj fotky (facelift?)</span><span class="badge badge-info">CZ auto: +~400€ prepis (odhad)</span></div>
+        <div class="badges"><span class="badge badge-sold">Predané / stiahnuté</span><span class="badge badge-warn">Skontroluj fotky (facelift?)</span><span class="badge badge-info">CZ auto: +~400€ prepis (odhad)</span></div>
         <a href="https://auto.bazos.cz/inzerat/223725800/volswagen-arteon-20tdi-147kw-112021-prodlouzena-zaruka.php" target="_blank" rel="noopener" class="card-title">Volswagen Arteon 2.0Tdi, 147kw, 11/2021, prodloužená záruka</a>
         <div class="card-price">695 000 CZK</div>
         <div class="price-eur-note">≈ 27 800 € (orientačne)</div>
+        <div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím (skutočná dohodnutá cena mohla byť iná)</div>
         
         <div class="card-meta">
           <span>2021</span> ·
