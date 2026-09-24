@@ -49,6 +49,17 @@ def listing_card_html(listing: dict, history: list[dict]) -> str:
     if listing["currency"] != config.CURRENCY_SK and listing["price_eur_est"]:
         price_eur_note = f'<div class="price-eur-note">≈ {listing["price_eur_est"]:,.0f} € (orientačne)</div>'.replace(",", " ")
 
+    # Pri predaných/stiahnutých autách je current_price posledná známa
+    # INZEROVANÁ cena (nikdy sa neprepisuje na nič iné, keď inzerát zmizne) -
+    # reálna dohodnutá cena pri kúpe mohla byť nižšia (dojednávanie na mieste),
+    # toto je len posledná vyvesená suma pred stiahnutím inzerátu.
+    sold_price_note = ""
+    if is_sold:
+        sold_price_note = (
+            '<div class="sold-price-note">Posledná inzerovaná cena pred stiahnutím '
+            "(skutočná dohodnutá cena mohla byť iná)</div>"
+        )
+
     return f"""
     <div class="card {'card-sold' if is_sold else ''}" data-price="{listing['current_price'] or 0}" data-year="{listing['year_built'] or 0}" data-km="{listing['km'] or 0}">
       <a href="{listing['url']}" target="_blank" rel="noopener" class="card-photo-link">
@@ -59,6 +70,7 @@ def listing_card_html(listing: dict, history: list[dict]) -> str:
         <a href="{listing['url']}" target="_blank" rel="noopener" class="card-title">{listing['title']}</a>
         <div class="card-price">{price_display}</div>
         {price_eur_note}
+        {sold_price_note}
         {price_trend_html(history)}
         <div class="card-meta">
           <span>{listing['year_built'] or '?'}</span> ·
@@ -107,6 +119,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   .card-title:hover {{ color: var(--accent); }}
   .card-price {{ font-size: 20px; font-weight: 700; }}
   .price-eur-note {{ font-size: 11px; color: var(--text-dim); margin-top: -4px; }}
+  .sold-price-note {{ font-size: 11px; color: var(--red); font-weight: 600; }}
   .price-history {{ font-size: 11px; color: var(--text-dim); }}
   .price-history.price-down {{ color: var(--green); }}
   .price-history.price-up {{ color: var(--red); }}

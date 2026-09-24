@@ -22,9 +22,29 @@ COLORS = [
     "strieborn", "stribrn",              # strieborná / stříbrná
     "biel", "bíl",                       # biela / bílá
     "cierna", "čierna", "cern", "čern",  # čierna / černá
-    "cerven", "červen",                  # červená
     "zlt", "žlt", "zlut", "žlut",        # žltá / žlutá
     "kurkuma", "horcicov", "horčicov",   # horčicová / Kurkuma Yellow (oficiálny VW názov)
+]
+
+# Farby ktoré NECHCEME - tvrdý filter, inzerát sa vôbec nezobrazí, aj keby inak
+# sedel na všetky ostatné kritériá. Hľadá sa ako podreťazec kdekoľvek v popise/title,
+# takže to nie je 100% neomylné (napr. text "nie je červená" by tiež vyhodil), ale
+# v praxi je to zriedkavé a bezpečnejšie než falošne NEVYFILTROVAŤ nechcenú farbu.
+EXCLUDE_COLOR_FRAGMENTS = ["cerven", "červen", "modr"]  # červená, modrá
+
+# Karoséria "veľký kufor" (kombi / Shooting Brake) - NECHCEME, len klasický liftback/sedan.
+# "sb" sa kontroluje ako samostatné slovo (regex \bsb\b), nie ako podreťazec,
+# aby to nevyhodilo niečo, čo náhodou obsahuje "sb" v inom slove.
+EXCLUDE_BODY_STYLE_CONTAINS = ["shooting brake", "kombi", "kombík"]
+EXCLUDE_BODY_STYLE_REGEX = [r"\bsb\b"]
+
+# Motor - chceme len čisté benzínové TSI, nie naftu (TDI) ani hybrid (eHybrid/PHEV
+# - Arteon eHybrid je 1.4 TSI + elektromotor/batéria, nie to isté ako čisté 2.0 TSI).
+# Bazos fulltext vyhľadávanie "arteon r-line" vracia všetky varianty, treba ich
+# odfiltrovať sami.
+EXCLUDE_FUEL_CONTAINS = [
+    "tdi", "bitdi", "biturbo tdi", "diesel", "nafta",
+    "ehybrid", "e-hybrid", "hybrid", "phev", "gte",
 ]
 
 # --- Poznámka k "nová palubovka" (facelift interiér) ---

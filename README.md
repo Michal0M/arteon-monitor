@@ -57,7 +57,10 @@ Všetko je v `config.py`:
 - `KEYWORD` - kľúčové slovo (napr. iný model auta)
 - `REQUIRE_TITLE_CONTAINS` - povinné výrazy (napr. "r-line")
 - `PRICE_MIN` / `PRICE_MAX`, `KM_MIN` / `KM_MAX`, `YEAR_MIN`
-- `COLORS` - zoznam akceptovaných farieb (hľadané ako podreťazec v texte)
+- `COLORS` - zoznam farieb, ktoré sa zobrazujú v tabuľke (len na display, neexkludujú nič)
+- `EXCLUDE_COLOR_FRAGMENTS` - farby ktoré NECHCEME (tvrdý filter, inzerát sa vôbec nezobrazí)
+- `EXCLUDE_BODY_STYLE_CONTAINS` / `EXCLUDE_BODY_STYLE_REGEX` - karoséria, ktorú nechceme (napr. Shooting Brake/kombi)
+- `EXCLUDE_FUEL_CONTAINS` - motor/palivo, ktoré nechceme (napr. TDI, chceme len TSI benzín)
 - `CZK_TO_EUR_RATE` - over si aktuálny kurz, tento je len orientačný
 
 Po úprave stačí commitnúť a pushnúť - ďalší denný beh použije nové kritériá.
@@ -80,6 +83,17 @@ tohto kódu. Bežné príčiny a čo robiť:
   (`extract_year`, `extract_km`, `extract_color` v `scraper.py`) je
   regex-based a nepokrýva úplne každý formát popisu. Priebežne dopĺňaj
   vzory podľa toho, čo sa v praxi objaví.
+
+## História cien a "za koľko sa predalo"
+
+Databáza nikdy neprepisuje staré ceny - každá zmena ceny sa pridá ako nový
+riadok do `price_history`, pôvodné zostávajú. Keď inzerát zmizne (predané/
+stiahnuté), zostáva viditeľný v tabuľke (filter "Predané") aj so všetkými
+detailmi (km, rok, farba, fotky) a jeho **poslednou inzerovanou cenou pred
+stiahnutím** - to je najbližšia dostupná informácia k reálnej predajnej cene,
+ktorú vieme zo statického inzerátu získať. Skutočná dohodnutá cena (po
+prípadnom zjednávaní na mieste) sa nedá zistiť automaticky - bazos ju nikde
+nezverejňuje.
 
 ## Známe obmedzenia
 
