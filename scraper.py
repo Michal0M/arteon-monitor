@@ -152,19 +152,24 @@ def find_exclusion_reason(text_lower: str) -> str | None:
     Skontroluje text (title+snippet, alebo neskôr celý vlastný popis) proti
     všetkým EXCLUDE_* zoznamom z config.py. Vráti dôvod vylúčenia (na logovanie)
     alebo None, ak nič nesedí.
+
+    POZOR: farba (SECONDARY_COLOR_FRAGMENTS) sa TU už nekontroluje - od 24.9.2026
+    je to mäkký filter (viď config.py), inzerát sa nevymaže, len sa v render.py
+    zaradí do samostatnej kategórie. Skutočná farba sa zisťuje cez extract_color()
+    a ukladá do listing["color_guess"] + listing["is_secondary_color"].
     """
     for frag in config.EXCLUDE_FUEL_CONTAINS:
         if frag in text_lower:
             return f"motor obsahuje '{frag}'"
+    for pat in config.EXCLUDE_ENGINE_REGEX:
+        if re.search(pat, text_lower, re.IGNORECASE):
+            return f"motor sedí na vzor '{pat}' (1.5 TSI - nechceme)"
     for frag in config.EXCLUDE_BODY_STYLE_CONTAINS:
         if frag in text_lower:
             return f"karoséria obsahuje '{frag}'"
     for pat in config.EXCLUDE_BODY_STYLE_REGEX:
         if re.search(pat, text_lower, re.IGNORECASE):
             return f"karoséria sedí na vzor '{pat}'"
-    for frag in config.EXCLUDE_COLOR_FRAGMENTS:
-        if frag in text_lower:
-            return f"farba obsahuje '{frag}'"
     return None
 
 
@@ -295,20 +300,32 @@ def extract_vin(text: str) -> str | None:
 
 
 def extract_color(text: str) -> str | None:
+    """
+    Hľadá farbu z config.COLORS (preferované) AJ config.SECONDARY_COLOR_FRAGMENTS
+    (červená/modrá - od 24.9.2026 mäkký filter, nie vymazanie, viď config.py) -
+    obe sa musia dať rozpoznať, aby sa auto vedelo správne zaradiť do kategórie
+    v render.py (is_secondary_color).
+    """
     text_lower = text.lower()
+    all_fragments = config.COLORS + config.SECONDARY_COLOR_FRAGMENTS
     # Priorita: hodnota priamo pri labeli "Farba:" je oveľa spoľahlivejšia než
     # hľadanie farebného slova kdekoľvek v texte (kde môže ísť napr. o farbu
     # ambientného osvetlenia, nie karosérie).
     m = re.search(r"farba\s*:?\s*([a-zA-ZáäčďéíľňóôŕšťúýžÁÄČĎÉÍĽŇÓÔŔŠŤÚÝŽ/ -]{2,30})", text)
     if m:
         label_value = m.group(1).lower()
-        for color_fragment in config.COLORS:
+        for color_fragment in all_fragments:
             if color_fragment in label_value:
                 return color_fragment
-    for color_fragment in config.COLORS:
+    for color_fragment in all_fragments:
         if color_fragment in text_lower:
             return color_fragment
     return None
+
+
+def is_secondary_color(color_guess: str | None) -> bool:
+    """True, ak zistená farba patrí medzi SECONDARY_COLOR_FRAGMENTS (červená/modrá)."""
+    return color_guess is not None and color_guess in config.SECONDARY_COLOR_FRAGMENTS
 
 
 def own_ad_text(body_text: str) -> str:
@@ -481,6 +498,7 @@ def run_source(source: dict, conn) -> dict:
                 "year_built": detail["year_built"],
                 "km": detail["km"],
                 "color_guess": detail["color_guess"],
+                "is_secondary_color": is_secondary_color(detail["color_guess"]),
                 "vin": detail["vin"],
                 "location": candidate["location"],
                 "main_photo_url": candidate["main_photo_url"],

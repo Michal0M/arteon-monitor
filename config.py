@@ -28,11 +28,13 @@ COLORS = [
     "kurkuma", "horcicov", "horčicov",   # horčicová / Kurkuma Yellow (oficiálny VW názov)
 ]
 
-# Farby ktoré NECHCEME - tvrdý filter, inzerát sa vôbec nezobrazí, aj keby inak
-# sedel na všetky ostatné kritériá. Hľadá sa ako podreťazec kdekoľvek v popise/title,
-# takže to nie je 100% neomylné (napr. text "nie je červená" by tiež vyhodil), ale
-# v praxi je to zriedkavé a bezpečnejšie než falošne NEVYFILTROVAŤ nechcenú farbu.
-EXCLUDE_COLOR_FRAGMENTS = ["cerven", "červen", "modr"]  # červená, modrá
+# Farby, ktoré NIE sú prvá voľba (červená, modrá) - MÄKKÝ filter (zmenené 24.9.2026
+# na žiadosť Michala): inzerát sa NEVYMAŽE, len sa v tabuľke zobrazí pod samostatnou
+# kategóriou "Červené/Modré" (rovnaký princíp ako YEAR_MIN nižšie), lebo sa môže
+# nájsť výhodná ponuka, ktorú by zvážil aj v tejto farbe. Hľadá sa ako podreťazec
+# kdekoľvek v popise/title, takže to nie je 100% neomylné (napr. text "nie je
+# červená" by tiež zaradil sem), ale v praxi je to zriedkavé.
+SECONDARY_COLOR_FRAGMENTS = ["cerven", "červen", "modr"]  # červená, modrá
 
 # Karoséria "veľký kufor" (kombi / Shooting Brake) - NECHCEME, len klasický liftback/sedan.
 # "sb" sa kontroluje ako samostatné slovo (regex \bsb\b), nie ako podreťazec,
@@ -48,6 +50,12 @@ EXCLUDE_FUEL_CONTAINS = [
     "tdi", "bitdi", "biturbo tdi", "diesel", "nafta",
     "ehybrid", "e-hybrid", "hybrid", "phev", "gte",
 ]
+
+# Motor 1.5 TSI (zvyčajne s manuálnou prevodovkou) - tvrdý filter, NECHCEME
+# (pridané 24.9.2026 na žiadosť Michala, po tom, čo sa objavil na autobazar.sk).
+# Regex namiesto obyčajného substring, lebo predajcovia píšu "1.5", "1,5",
+# aj "1,5tsi"/"1.5tsi" bez medzery pred "tsi".
+EXCLUDE_ENGINE_REGEX = [r"1[.,]5\s*tsi"]
 
 # --- Poznámka k "nová palubovka" (facelift interiér) ---
 # Toto sa nedá spoľahlivo zistiť z textu inzerátu ani z URL parametrov.

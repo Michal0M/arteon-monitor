@@ -57,10 +57,12 @@ Všetko je v `config.py`:
 - `KEYWORD` - kľúčové slovo (napr. iný model auta)
 - `REQUIRE_TITLE_CONTAINS` - povinné výrazy (napr. "r-line")
 - `PRICE_MIN` / `PRICE_MAX`, `KM_MIN` / `KM_MAX`, `YEAR_MIN`
-- `COLORS` - zoznam farieb, ktoré sa zobrazujú v tabuľke (len na display, neexkludujú nič)
-- `EXCLUDE_COLOR_FRAGMENTS` - farby ktoré NECHCEME (tvrdý filter, inzerát sa vôbec nezobrazí)
+- `COLORS` - zoznam preferovaných farieb, ktoré sa zobrazujú v tabuľke (len na display, neexkludujú nič)
+- `SECONDARY_COLOR_FRAGMENTS` - farby, ktoré NIE sú prvá voľba (červená, modrá) - MÄKKÝ filter,
+  inzerát sa nevymaže, len sa zobrazí pod samostatnou kategóriou "Červené/Modré" (rovnaký princíp ako `YEAR_MIN`)
 - `EXCLUDE_BODY_STYLE_CONTAINS` / `EXCLUDE_BODY_STYLE_REGEX` - karoséria, ktorú nechceme (napr. Shooting Brake/kombi)
 - `EXCLUDE_FUEL_CONTAINS` - motor/palivo, ktoré nechceme (napr. TDI, chceme len TSI benzín)
+- `EXCLUDE_ENGINE_REGEX` - motorové varianty, ktoré nechceme (napr. 1.5 TSI - tvrdý filter)
 - `CZK_TO_EUR_RATE` - over si aktuálny kurz, tento je len orientačný
 
 Po úprave stačí commitnúť a pushnúť - ďalší denný beh použije nové kritériá.
@@ -107,8 +109,19 @@ viacerých weboch - ale keď sa k tomu pridá iné meno/telefón a mierne odliš
 cena, je to silný signál na overenie pred kontaktovaním. Funguje len pre
 inzeráty, ktoré VIN vôbec uvádzajú - chýbajúci VIN sa nedá porovnať.
 
+## Kategória "Červené/Modré"
+
+Rovnaká logika ako "Staršie ako {YEAR_MIN}" - auto v červenej alebo modrej farbe
+(`config.SECONDARY_COLOR_FRAGMENTS`) sa NEVYMAŽE, len sa v tabuľke zobrazí pod
+samostatnou záložkou "Červené/Modré" namiesto "Aktívne". Dôvod: aj keď to nie
+je prvá voľba farby, pri dostatočne výhodnej ponuke prichádza do úvahy kúpa.
+
 ## Známe obmedzenia
 
+- **Fotky z autobazar.sk sa zatiaľ nezobrazujú** - nepodarilo sa spoľahlivo
+  zistiť formát URL fotiek (galéria sa dohráva cez API volania mimo dosahu
+  dostupných nástrojov). `main_photo_url`/`all_photo_urls` sú pre tento zdroj
+  zatiaľ prázdne, karta sa zobrazí bez fotky.
 - **"Nová palubovka" (facelift interiér)** sa nedá spoľahlivo zistiť z textu
   inzerátu. Autá s rokom výroby pred `FACELIFT_CHECK_YEAR_THRESHOLD` majú
   v tabuľke badge "Skontroluj fotky" - over si to ručne pri kandidátoch.
@@ -116,6 +129,6 @@ inzeráty, ktoré VIN vôbec uvádzajú - chýbajúci VIN sa nedá porovnať.
   v `config.py` - nie live kurz. Pred reálnym rozhodovaním o kúpe si over
   aktuálny kurz aj náklady na prepis (`CZ_IMPORT_EXTRA_COST_ESTIMATE_EUR`
   je hrubý odhad, nie overená suma).
-- Scraper pokrýva len **bazos.sk a bazos.cz**. Iné SK/CZ autobazáre
-  (autobazar.sk/eu, sauto.cz) majú v `robots.txt` plošný zákaz crawlovania
-  a neboli zahrnuté.
+- Scraper pokrýva **bazos.sk, bazos.cz a autobazar.sk**. Iné SK/CZ autobazáre
+  (sauto.cz, autoscout24.sk, mobile.de) majú v `robots.txt` plošný zákaz
+  crawlovania a neboli zahrnuté.

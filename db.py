@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS listings (
     price_eur_est   REAL,               -- orientačný prepočet na EUR pre porovnanie SK/CZ
     year_built      INTEGER,
     km              INTEGER,
-    color_guess     TEXT,               -- ktorá farba z config.COLORS bola nájdená v texte
+    color_guess     TEXT,               -- ktorá farba z config.COLORS/SECONDARY_COLOR_FRAGMENTS bola nájdená v texte
+    is_secondary_color INTEGER DEFAULT 0, -- 1 = farba je červená/modrá (config.SECONDARY_COLOR_FRAGMENTS) - mäkká kategória, nie vymazané
     vin             TEXT,               -- VIN vozidla, ak bol v texte uvedený (na detekciu duplicít, viď find_duplicate_vins)
     location        TEXT,
     main_photo_url  TEXT,
@@ -82,6 +83,12 @@ def init_db(db_path: str) -> None:
             conn.execute("ALTER TABLE listings ADD COLUMN vin TEXT")
         except sqlite3.OperationalError:
             pass
+        # Migrácia pre existujúce DB súbory PRED pridaním stĺpca 'is_secondary_color'
+        # (24.9.2026) - farba červená/modrá sa už nevymazáva, len sa označí.
+        try:
+            conn.execute("ALTER TABLE listings ADD COLUMN is_secondary_color INTEGER DEFAULT 0")
+        except sqlite3.OperationalError:
+            pass
         conn.execute("CREATE INDEX IF NOT EXISTS idx_listings_vin ON listings(vin)")
 
 
@@ -111,16 +118,17 @@ def upsert_listing(conn, listing: dict) -> str:
             """
             INSERT INTO listings (
                 id, source, url, title, description_raw, current_price, currency,
-                price_eur_est, year_built, km, color_guess, vin, location,
+                price_eur_est, year_built, km, color_guess, is_secondary_color, vin, location,
                 main_photo_url, all_photo_urls, needs_photo_check, status,
                 first_seen_at, last_seen_at, removed_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', ?, ?, NULL)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', ?, ?, NULL)
             """,
             (
                 listing["id"], listing["source"], listing["url"], listing["title"],
                 listing.get("description_raw"), listing.get("current_price"),
                 listing.get("currency"), listing.get("price_eur_est"),
                 listing.get("year_built"), listing.get("km"), listing.get("color_guess"),
+                int(listing.get("is_secondary_color", 0)),
                 listing.get("vin"), listing.get("location"), listing.get("main_photo_url"),
                 listing.get("all_photo_urls"), int(listing.get("needs_photo_check", 0)),
                 ts, ts,
@@ -141,7 +149,7 @@ def upsert_listing(conn, listing: dict) -> str:
         """
         UPDATE listings SET
             title = ?, description_raw = ?, current_price = ?, currency = ?,
-            price_eur_est = ?, year_built = ?, km = ?, color_guess = ?, vin = ?,
+            price_eur_est = ?, year_built = ?, km = ?, color_guess = ?, is_secondary_color = ?, vin = ?,
             location = ?, main_photo_url = ?, all_photo_urls = ?,
             needs_photo_check = ?, status = 'active', last_seen_at = ?, removed_at = NULL
         WHERE id = ?
@@ -150,6 +158,7 @@ def upsert_listing(conn, listing: dict) -> str:
             listing["title"], listing.get("description_raw"), new_price,
             listing.get("currency"), listing.get("price_eur_est"),
             listing.get("year_built"), listing.get("km"), listing.get("color_guess"),
+            int(listing.get("is_secondary_color", 0)),
             listing.get("vin"), listing.get("location"), listing.get("main_photo_url"),
             listing.get("all_photo_urls"), int(listing.get("needs_photo_check", 0)),
             ts, listing["id"],

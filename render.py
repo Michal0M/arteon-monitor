@@ -57,10 +57,15 @@ def listing_card_html(listing: dict, history: list[dict], dupes_by_vin: dict) ->
     # "Staršie ako YEAR_MIN" - MÄKKÁ kategória (auto sa neodmietlo, len sa nezaradí
     # medzi "Aktívne" - viď poznámka pri YEAR_MIN v config.py a v scraper.py run_source)
     is_old_year = listing["year_built"] is not None and listing["year_built"] < config.YEAR_MIN
+    # "Červené/Modré" - MÄKKÁ kategória (pridané 24.9.2026, viď config.py
+    # SECONDARY_COLOR_FRAGMENTS) - rovnaký princíp ako staršie ročníky.
+    is_secondary_color = bool(listing["is_secondary_color"])
 
     badges = []
     if is_sold:
         badges.append('<span class="badge badge-sold">Predané / stiahnuté</span>')
+    if is_secondary_color:
+        badges.append('<span class="badge badge-color">Červená/Modrá</span>')
     if is_old_year:
         badges.append(f'<span class="badge badge-old">Staršie ako {config.YEAR_MIN}</span>')
     if listing["needs_photo_check"]:
@@ -89,6 +94,7 @@ def listing_card_html(listing: dict, history: list[dict], dupes_by_vin: dict) ->
         "card",
         "card-sold" if is_sold else "",
         "card-old" if is_old_year else "",
+        "card-color" if is_secondary_color else "",
     ]))
     return f"""
     <div class="{card_classes}" data-price="{listing['current_price'] or 0}" data-year="{listing['year_built'] or 0}" data-km="{listing['km'] or 0}">
@@ -148,6 +154,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   .badge-warn {{ background: var(--yellow); color: #000; }}
   .badge-info {{ background: #2a3f5f; color: #9dc4ff; }}
   .badge-old {{ background: #4a3a1a; color: #f0c070; }}
+  .badge-color {{ background: #4a1a2a; color: #f08fb0; }}
   .card-title {{ color: var(--text); font-weight: 600; font-size: 14px; text-decoration: none; line-height: 1.3; }}
   .card-title:hover {{ color: var(--accent); }}
   .card-price {{ font-size: 20px; font-weight: 700; }}
@@ -166,9 +173,10 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
   <h1>🚗 VW Arteon R-Line monitor</h1>
-  <div class="subtitle">Naposledy aktualizované: {updated_at} · {active_count} aktívnych · {old_count} starších ako {year_min} · {sold_count} predaných/stiahnutých</div>
+  <div class="subtitle">Naposledy aktualizované: {updated_at} · {active_count} aktívnych · {color_count} červených/modrých · {old_count} starších ako {year_min} · {sold_count} predaných/stiahnutých</div>
   <div class="controls">
     <button class="filter-btn active" data-filter="active">Aktívne ({active_count})</button>
+    <button class="filter-btn" data-filter="color">Červené/Modré ({color_count})</button>
     <button class="filter-btn" data-filter="old">Staršie ako {year_min} ({old_count})</button>
     <button class="filter-btn" data-filter="all">Všetky ({total_count})</button>
     <button class="filter-btn" data-filter="sold">Predané ({sold_count})</button>
@@ -190,15 +198,20 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   const cards = Array.from(grid.children);
 
   function applyFilter(filter) {{
+    // Priorita kategórií (rovnaká ako v render.py počítaní): sold > color > old > active.
+    // Auto, ktoré je aj staršie AJ červené/modré, sa zaradí pod "Červené/Modré",
+    // nie pod obe naraz - tab-filtre sú navzájom sa vylučujúce (okrem "Všetky").
     let visibleCount = 0;
     cards.forEach(c => {{
       const isSold = c.classList.contains('card-sold');
+      const isColor = c.classList.contains('card-color');
       const isOld = c.classList.contains('card-old');
       let show;
       if (filter === 'all') show = true;
       else if (filter === 'sold') show = isSold;
-      else if (filter === 'old') show = !isSold && isOld;
-      else show = !isSold && !isOld;  // 'active'
+      else if (filter === 'color') show = !isSold && isColor;
+      else if (filter === 'old') show = !isSold && !isColor && isOld;
+      else show = !isSold && !isColor && !isOld;  // 'active'
       c.style.display = show ? '' : 'none';
       if (show) visibleCount++;
     }});
@@ -269,13 +282,20 @@ def render():
     def is_old(l):
         return l["year_built"] is not None and l["year_built"] < config.YEAR_MIN
 
+    def is_color(l):
+        return bool(l["is_secondary_color"])
+
+    # Rovnaká priorita ako filter tlačidlá v JS: sold > color > old > active.
+    # Auto staršie AJ červené/modré sa počíta len raz, pod "Červené/Modré".
     sold_count = sum(1 for l in listings if l["status"] != "active")
-    old_count = sum(1 for l in listings if l["status"] == "active" and is_old(l))
-    active_count = len(listings) - sold_count - old_count
+    color_count = sum(1 for l in listings if l["status"] == "active" and is_color(l))
+    old_count = sum(1 for l in listings if l["status"] == "active" and not is_color(l) and is_old(l))
+    active_count = len(listings) - sold_count - color_count - old_count
 
     html = PAGE_TEMPLATE.format(
         updated_at=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         active_count=active_count,
+        color_count=color_count,
         old_count=old_count,
         sold_count=sold_count,
         total_count=len(listings),

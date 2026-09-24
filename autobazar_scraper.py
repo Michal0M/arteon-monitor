@@ -148,21 +148,28 @@ def extract_body_style(text: str) -> str | None:
 
 
 def extract_color(text: str) -> str | None:
-    """Rovnaká farebná paleta ako scraper.py (config.COLORS), ale hľadaná
-    LEN v hodnote štruktúrovaného poľa 'Farba:' - presnejšie než skenovanie
+    """Farebná paleta config.COLORS (preferované) AJ config.SECONDARY_COLOR_FRAGMENTS
+    (červená/modrá - od 24.9.2026 mäkký filter, nie vymazanie, viď config.py),
+    hľadaná LEN v hodnote štruktúrovaného poľa 'Farba:' - presnejšie než skenovanie
     celého textu (na tejto stránke to ani nie je treba, lebo pole existuje)."""
     m = re.search(r"Farba:\s*([^\n]+)", text, re.IGNORECASE)
     if not m:
         return None
     value_lower = m.group(1).strip().lower()
-    for color_fragment in config.COLORS:
+    for color_fragment in config.COLORS + config.SECONDARY_COLOR_FRAGMENTS:
         if color_fragment in value_lower:
             return color_fragment
     return None
 
 
 def matches_criteria(own_text: str, title: str) -> str | None:
-    """Vráti dôvod vylúčenia (text na logovanie) alebo None, ak inzerát sedí."""
+    """
+    Vráti dôvod vylúčenia (text na logovanie) alebo None, ak inzerát sedí.
+
+    POZOR: farba sa TU už nekontroluje - od 24.9.2026 je to mäkký filter
+    (viď config.py), inzerát sa nevymaže, len sa v render.py zaradí do
+    samostatnej kategórie cez listing["is_secondary_color"].
+    """
     combined_lower = f"{title} {own_text}".lower()
 
     if config.REQUIRE_TITLE_CONTAINS and not any(
@@ -174,6 +181,9 @@ def matches_criteria(own_text: str, title: str) -> str | None:
     for frag in config.EXCLUDE_FUEL_CONTAINS:
         if frag in fuel_lower or frag in combined_lower:
             return f"motor obsahuje '{frag}'"
+    for pat in config.EXCLUDE_ENGINE_REGEX:
+        if re.search(pat, combined_lower, re.IGNORECASE):
+            return f"motor sedí na vzor '{pat}' (1.5 TSI - nechceme)"
 
     body_lower = (extract_body_style(own_text) or "").lower()
     for frag in config.EXCLUDE_BODY_STYLE_CONTAINS:
@@ -182,12 +192,6 @@ def matches_criteria(own_text: str, title: str) -> str | None:
     for pat in config.EXCLUDE_BODY_STYLE_REGEX:
         if re.search(pat, combined_lower, re.IGNORECASE):
             return f"karoséria sedí na vzor '{pat}'"
-
-    m = re.search(r"Farba:\s*([^\n]+)", own_text, re.IGNORECASE)
-    color_lower = m.group(1).strip().lower() if m else ""
-    for frag in config.EXCLUDE_COLOR_FRAGMENTS:
-        if color_lower and frag in color_lower:
-            return f"farba obsahuje '{frag}'"
 
     return None
 
@@ -207,6 +211,7 @@ def parse_detail_page(html: str) -> dict:
         "year_built": extract_year(own_text),
         "km": extract_km(own_text),
         "color_guess": extract_color(own_text),
+        "is_secondary_color": scraper.is_secondary_color(extract_color(own_text)),
         "vin": scraper.extract_vin(own_text),
         # TODO fotky - viď bod 4 v hlavičke súboru
         "all_photo_urls": "[]",
@@ -292,6 +297,7 @@ def run(conn) -> dict:
             "year_built": detail["year_built"],
             "km": detail["km"],
             "color_guess": detail["color_guess"],
+            "is_secondary_color": detail["is_secondary_color"],
             "vin": detail["vin"],
             "location": None,
             "main_photo_url": detail["main_photo_url"],
