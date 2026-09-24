@@ -313,15 +313,32 @@ def extract_color(text: str) -> str | None:
 
 def own_ad_text(body_text: str) -> str:
     """
-    Oreže celý textový obsah stránky len na vlastný inzerát - všetko
-    OD nadpisu "Podobné inzeráty" ĎALEJ sú iné, cudzie inzeráty, ktorých
-    km/rok/farba/motor by inak kontaminovali extrakciu (viď bug #5 v hlavičke
-    súboru). Ak marker nenájde (iný layout stránky), vráti celý text - radšej
-    nefiltrovať nič, než niečo uřezať zle.
+    Oreže celý textový obsah stránky len na vlastný inzerát - na OBOCH koncoch:
+
+    - KONIEC: všetko OD nadpisu "Podobné inzeráty" ĎALEJ sú iné, cudzie
+      inzeráty, ktorých km/rok/farba/motor by inak kontaminovali extrakciu
+      (bug #5 v hlavičke súboru).
+    - ZAČIATOK (bug #6, nájdený 24.9.2026): PRED skutočným popisom je celá
+      hlavička stránky - cookie banner, menu kategórií, breadcrumb, nadpis
+      inzerátu a DÁTUM PRIDANIA v tvare "- [11.9. 2026]". Keď inzerát nemá
+      žiadny explicitný "rok výroby"/"r.v."/"vyrobeno" label (napr. len
+      "prvé prihlásenie 1/2020"), extrakcia roku spadla na poslednú záchrannú
+      sieť (ľubovoľný d./rrrr vzor) a tá si namiesto skutočného dátumu z textu
+      chytila DÁTUM PRIDANIA INZERÁTU z hlavičky stránky - úplne nesúvisiace
+      číslo. Marker "Zmazať/ Upraviť/ Topovať" sa na stránke objavuje VŽDY
+      tesne PRED skutočným popisom (viditeľný pre každého návštevníka, nie
+      len majiteľa inzerátu), takže je to spoľahlivý začiatočný orezávací bod.
+
+    Ak niektorý marker nenájde (iný layout stránky), orezáva len z tej strany,
+    kde marker našiel - radšej nefiltrovať nič, než niečo uřezať zle.
     """
-    marker = "Podobné inzeráty"
-    idx = body_text.find(marker)
-    return body_text[:idx] if idx != -1 else body_text
+    start_marker = "Zmazať/ Upraviť/ Topovať"
+    end_marker = "Podobné inzeráty"
+    start_idx = body_text.find(start_marker)
+    start = start_idx + len(start_marker) if start_idx != -1 else 0
+    end_idx = body_text.find(end_marker)
+    end = end_idx if end_idx != -1 else len(body_text)
+    return body_text[start:end]
 
 
 def parse_detail_page(html: str, image_base_url: str) -> dict:
