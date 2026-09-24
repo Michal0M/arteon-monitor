@@ -77,12 +77,22 @@ def build_search_url(page: int) -> str:
 
 
 def extract_detail_urls(html: str) -> list[tuple[str, str]]:
-    """Vráti zoznam (url, id) unikátnych detail-inzerátov nájdených v HTML."""
+    """
+    Vráti zoznam (url, id) unikátnych detail-inzerátov nájdených v HTML.
+
+    POZOR (bug nájdený 24.9.2026 pri prvom reálnom behu): `seen` je interne
+    {id: url} kvôli deduplikácii podľa id, ale von sa MUSÍ vracať v poradí
+    (url, id) - presne v tomto poradí to očakáva run() nižšie. Pôvodná verzia
+    vracala `list(seen.items())`, čo je (id, url) - opačne, než hovorí tento
+    docstring aj kód v run(). Výsledok: run() si pomýlil url a id a poslal
+    do requests.get() holé číslo namiesto URL ("Invalid URL '28435138': No
+    scheme supplied").
+    """
     seen: dict[str, str] = {}
     for m in DETAIL_URL_RE.finditer(html):
         url, listing_id = m.group(1), m.group(2)
         seen[listing_id] = url
-    return list(seen.items())
+    return [(url, listing_id) for listing_id, url in seen.items()]
 
 
 def own_ad_text(body_text: str) -> str:
