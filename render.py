@@ -34,10 +34,15 @@ def listing_card_html(listing: dict, history: list[dict]) -> str:
     photos = json.loads(listing["all_photo_urls"] or "[]")
     main_photo = listing["main_photo_url"] or (photos[0] if photos else "")
     is_sold = listing["status"] != "active"
+    # "Staršie ako YEAR_MIN" - MÄKKÁ kategória (auto sa neodmietlo, len sa nezaradí
+    # medzi "Aktívne" - viď poznámka pri YEAR_MIN v config.py a v scraper.py run_source)
+    is_old_year = listing["year_built"] is not None and listing["year_built"] < config.YEAR_MIN
 
     badges = []
     if is_sold:
         badges.append('<span class="badge badge-sold">Predané / stiahnuté</span>')
+    if is_old_year:
+        badges.append(f'<span class="badge badge-old">Staršie ako {config.YEAR_MIN}</span>')
     if listing["needs_photo_check"]:
         badges.append('<span class="badge badge-warn">Skontroluj fotky (facelift?)</span>')
     if listing["source"] == "bazos_cz":
@@ -60,8 +65,13 @@ def listing_card_html(listing: dict, history: list[dict]) -> str:
             "(skutočná dohodnutá cena mohla byť iná)</div>"
         )
 
+    card_classes = " ".join(filter(None, [
+        "card",
+        "card-sold" if is_sold else "",
+        "card-old" if is_old_year else "",
+    ]))
     return f"""
-    <div class="card {'card-sold' if is_sold else ''}" data-price="{listing['current_price'] or 0}" data-year="{listing['year_built'] or 0}" data-km="{listing['km'] or 0}">
+    <div class="{card_classes}" data-price="{listing['current_price'] or 0}" data-year="{listing['year_built'] or 0}" data-km="{listing['km'] or 0}">
       <a href="{listing['url']}" target="_blank" rel="noopener" class="card-photo-link">
         <img class="card-photo" src="{main_photo}" alt="{listing['title']}" loading="lazy" onerror="this.style.opacity=0.3">
       </a>
@@ -101,9 +111,10 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   body {{ background: var(--bg); color: var(--text); font-family: -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 16px; }}
   h1 {{ font-size: 20px; margin: 0 0 4px; }}
   .subtitle {{ color: var(--text-dim); font-size: 13px; margin-bottom: 16px; }}
-  .controls {{ display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }}
+  .controls {{ display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }}
   .controls button {{ background: var(--card-bg); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; }}
-  .controls button.active {{ background: var(--accent); border-color: var(--accent); color: #fff; }}
+  .controls button.active, .controls button.sort-btn-active {{ background: var(--accent); border-color: var(--accent); color: #fff; }}
+  .sort-label {{ color: var(--text-dim); font-size: 13px; }}
   .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }}
   .card {{ background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }}
   .card-sold {{ opacity: 0.5; }}
@@ -115,6 +126,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   .badge-sold {{ background: var(--red); color: #fff; }}
   .badge-warn {{ background: var(--yellow); color: #000; }}
   .badge-info {{ background: #2a3f5f; color: #9dc4ff; }}
+  .badge-old {{ background: #4a3a1a; color: #f0c070; }}
   .card-title {{ color: var(--text); font-weight: 600; font-size: 14px; text-decoration: none; line-height: 1.3; }}
   .card-title:hover {{ color: var(--accent); }}
   .card-price {{ font-size: 20px; font-weight: 700; }}
@@ -131,12 +143,17 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
   <h1>🚗 VW Arteon R-Line monitor</h1>
-  <div class="subtitle">Naposledy aktualizované: {updated_at} · {active_count} aktívnych · {sold_count} predaných/stiahnutých</div>
+  <div class="subtitle">Naposledy aktualizované: {updated_at} · {active_count} aktívnych · {old_count} starších ako {year_min} · {sold_count} predaných/stiahnutých</div>
   <div class="controls">
     <button class="filter-btn active" data-filter="active">Aktívne ({active_count})</button>
+    <button class="filter-btn" data-filter="old">Staršie ako {year_min} ({old_count})</button>
     <button class="filter-btn" data-filter="all">Všetky ({total_count})</button>
     <button class="filter-btn" data-filter="sold">Predané ({sold_count})</button>
-    <button id="sort-price" class="sort-btn active">Zoradiť: cena ↑</button>
+  </div>
+  <div class="controls">
+    <span class="sort-label">Zoradiť:</span>
+    <button id="sort-price" class="sort-btn sort-btn-active" data-field="price">Cena ↑</button>
+    <button id="sort-km" class="sort-btn" data-field="km">Km ↑</button>
   </div>
   <div id="grid" class="grid">
     {cards_html}
@@ -153,7 +170,12 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     let visibleCount = 0;
     cards.forEach(c => {{
       const isSold = c.classList.contains('card-sold');
-      let show = filter === 'all' || (filter === 'active' && !isSold) || (filter === 'sold' && isSold);
+      const isOld = c.classList.contains('card-old');
+      let show;
+      if (filter === 'all') show = true;
+      else if (filter === 'sold') show = isSold;
+      else if (filter === 'old') show = !isSold && isOld;
+      else show = !isSold && !isOld;  // 'active'
       c.style.display = show ? '' : 'none';
       if (show) visibleCount++;
     }});
@@ -168,18 +190,43 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     }});
   }});
 
-  let sortAsc = true;
-  document.getElementById('sort-price').addEventListener('click', function() {{
-    sortAsc = !sortAsc;
-    this.textContent = 'Zoradiť: cena ' + (sortAsc ? '↑' : '↓');
+  // Radenie - dve tlačidlá (cena / km), každé so svojím smerom, aktívne je
+  // vždy len jedno naposledy kliknuté pole.
+  const sortBtns = document.querySelectorAll('.sort-btn');
+  const sortState = {{ field: 'price', asc: true }};
+
+  function applySort() {{
     const sorted = cards.slice().sort((a, b) => {{
-      const pa = parseFloat(a.dataset.price) || 0;
-      const pb = parseFloat(b.dataset.price) || 0;
-      return sortAsc ? pa - pb : pb - pa;
+      const pa = parseFloat(a.dataset[sortState.field]) || 0;
+      const pb = parseFloat(b.dataset[sortState.field]) || 0;
+      return sortState.asc ? pa - pb : pb - pa;
     }});
     sorted.forEach(c => grid.appendChild(c));
+  }}
+
+  function updateSortLabels() {{
+    sortBtns.forEach(btn => {{
+      const isActiveField = btn.dataset.field === sortState.field;
+      btn.classList.toggle('sort-btn-active', isActiveField);
+      const label = btn.dataset.field === 'price' ? 'Cena' : 'Km';
+      btn.textContent = label + ' ' + (isActiveField ? (sortState.asc ? '↑' : '↓') : '');
+    }});
+  }}
+
+  sortBtns.forEach(btn => {{
+    btn.addEventListener('click', () => {{
+      if (sortState.field === btn.dataset.field) {{
+        sortState.asc = !sortState.asc;
+      }} else {{
+        sortState.field = btn.dataset.field;
+        sortState.asc = true;
+      }}
+      updateSortLabels();
+      applySort();
+    }});
   }});
 
+  updateSortLabels();
   applyFilter('active');
 </script>
 </body>
@@ -195,14 +242,20 @@ def render():
             history = db.get_price_history(conn, listing["id"])
             cards.append(listing_card_html(listing, history))
 
-    active_count = sum(1 for l in listings if l["status"] == "active")
-    sold_count = len(listings) - active_count
+    def is_old(l):
+        return l["year_built"] is not None and l["year_built"] < config.YEAR_MIN
+
+    sold_count = sum(1 for l in listings if l["status"] != "active")
+    old_count = sum(1 for l in listings if l["status"] == "active" and is_old(l))
+    active_count = len(listings) - sold_count - old_count
 
     html = PAGE_TEMPLATE.format(
         updated_at=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         active_count=active_count,
+        old_count=old_count,
         sold_count=sold_count,
         total_count=len(listings),
+        year_min=config.YEAR_MIN,
         cards_html="\n".join(cards) if cards else "",
     )
 

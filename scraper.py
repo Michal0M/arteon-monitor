@@ -215,6 +215,8 @@ def extract_year(text: str) -> int | None:
         # "Rok výroby: 17.10.2017" - celý dátum d.m.rrrr formát
         r"\d{1,2}\.\d{1,2}\.(20\d{2})",
         r"\b\d{1,2}/(20\d{2})\b",
+        # "r.v.2019" - skratka priamo pred rokom, bez bodky/lomky/medzery
+        r"r\.?v\.?\s*:?\s*(20\d{2})\b",
     ]
     for pat in patterns:
         m = re.search(pat, text, re.IGNORECASE)
@@ -234,6 +236,14 @@ def extract_km(text: str) -> int | None:
     m = re.search(r"(\d{1,3})\s?([xX]{2,5})\s*km", text)
     if m:
         estimated = int(m.group(1) + "0" * len(m.group(2)))  # dolný odhad rozsahu
+        if 100 <= estimated <= 900_000:
+            return estimated
+
+    # "135tis.km" / "135 tis. km" - "tis." = tisíc, bežná skratka namiesto plných číslic
+    m = re.search(r"(\d{1,3}(?:[.,]\d)?)\s*tis\.?\s*km", text, re.IGNORECASE)
+    if m:
+        tis_value = float(m.group(1).replace(",", "."))
+        estimated = int(tis_value * 1000)
         if 100 <= estimated <= 900_000:
             return estimated
 
@@ -324,7 +334,16 @@ def to_eur_estimate(price: float | None, currency: str) -> float | None:
 
 
 def run_source(source: dict, conn) -> dict:
-    """Spracuje jeden zdroj (bazos_sk / bazos_cz). Vráti štatistiky behu."""
+    """
+    Spracuje jeden zdroj (bazos_sk / bazos_cz). Vráti štatistiky behu.
+
+    Dôležité rozlíšenie: inzerát, ktorý NESEDÍ na kritériá z config.py (motor,
+    karoséria, farba, cena, km, rok) sa z DB rovno VYMAŽE (db.delete_listing) -
+    nezobrazí sa vôbec, ani pod "Predané". Naproti tomu inzerát, ktorý sme
+    hľadali a vôbec sme ho nenašli v žiadnom výpise (skutočne zmizol z bazosu -
+    predané/stiahnuté predajcom), sa označí ako 'sold_or_removed'
+    (mark_missing_as_sold) a ZOSTÁVA viditeľný v tabuľke aj s históriou.
+    """
     stats = {"new": 0, "price_changed": 0, "unchanged": 0, "skipped_criteria": 0, "sold": 0}
     seen_ids = set()
 
@@ -346,6 +365,11 @@ def run_source(source: dict, conn) -> dict:
 
         for candidate in candidates:
             if not title_matches_criteria(candidate["title"], candidate["snippet"]):
+                # Nesedí na kritériá (napr. TDI/hybrid/SB v title) - ak sme ho
+                # predtým mali v DB (napr. pred sprísnením filtra), vymažeme ho
+                # ÚPLNE, nie označiť ako "predané" - reálne to len prestalo sedieť
+                # na to, čo chceme vidieť, nezmizlo z bazosu.
+                db.delete_listing(conn, candidate["id"])
                 stats["skipped_criteria"] += 1
                 continue
 
@@ -354,6 +378,7 @@ def run_source(source: dict, conn) -> dict:
             if list_price_eur is not None:
                 if list_price_eur < config.PRICE_MIN * 0.85 or list_price_eur > config.PRICE_MAX * 1.15:
                     # tolerancia +-15%, presný filter urobíme až po detail parse
+                    db.delete_listing(conn, candidate["id"])
                     stats["skipped_criteria"] += 1
                     continue
 
@@ -372,6 +397,7 @@ def run_source(source: dict, conn) -> dict:
             exclusion_reason = find_exclusion_reason(own_text_lower)
             if exclusion_reason:
                 print(f"[{source['name']}] VYLÚČENÉ ({exclusion_reason}): {candidate['title']}")
+                db.delete_listing(conn, candidate["id"])
                 stats["skipped_criteria"] += 1
                 continue
 
@@ -380,14 +406,17 @@ def run_source(source: dict, conn) -> dict:
 
             # Finálne tvrdé filtre podľa config.py
             if price_eur is None or not (config.PRICE_MIN <= price_eur <= config.PRICE_MAX):
+                db.delete_listing(conn, candidate["id"])
                 stats["skipped_criteria"] += 1
                 continue
             if detail["km"] is not None and not (config.KM_MIN <= detail["km"] <= config.KM_MAX):
+                db.delete_listing(conn, candidate["id"])
                 stats["skipped_criteria"] += 1
                 continue
-            if detail["year_built"] is not None and detail["year_built"] < config.YEAR_MIN:
-                stats["skipped_criteria"] += 1
-                continue
+            # POZOR: YEAR_MIN sa NEPOUŽÍVA na zamietnutie - staršie autá (rok < YEAR_MIN)
+            # sa aj tak uložia, len sa v tabuľke zobrazia pod samostatnou kategóriou
+            # "Staršie ako {YEAR_MIN}" (viď render.py), nie medzi "Aktívne". Dôvod:
+            # Michal ich chce vidieť oddelene, nie úplne vyradiť.
 
             needs_check = (
                 detail["year_built"] is None

@@ -15,7 +15,9 @@ CURRENCY_CZ = "CZK"
 KM_MIN = 0
 KM_MAX = 120_000
 
-YEAR_MIN = 2021             # rok výroby / model rok - filtrované až po extrakcii z textu (nie je to filter v URL)
+YEAR_MIN = 2021             # rok výroby - MÄKKÝ filter: staršie autá sa NEZAHODIA, len sa
+                             # v tabuľke zobrazia pod samostatnou kategóriou "Staršie ako {YEAR_MIN}"
+                             # (pozri render.py), nie medzi "Aktívne"
 
 # Farby - hľadáme tieto reťazce (lowercase, bez diakritiky aj s diakritikou) v popise/title
 COLORS = [
