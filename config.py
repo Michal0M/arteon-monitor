@@ -56,6 +56,13 @@ EXCLUDE_FUEL_CONTAINS = [
 # kde je najvyššie riziko starej palubovky pred faceliftom.
 FACELIFT_CHECK_YEAR_THRESHOLD = 2022  # ročníky < tohto roka sa označia na manuálnu kontrolu
 
+# --- Druhý zdroj: autobazar.sk ---
+# Iná štruktúra než bazos - vyhľadávanie beží cez SUBDOMÉNU "znacka-model.autobazar.sk"
+# namiesto query parametrov. Toto je URL pre "Volkswagen Arteon" konkrétne - ak by
+# si niekedy sledoval iný model, treba zmeniť aj toto (nedá sa odvodiť z KEYWORD
+# automaticky, lebo autobazar.sk používa vlastné SEO-slug názvy modelov).
+AUTOBAZAR_SEARCH_URL = "https://volkswagen-arteon.autobazar.sk/"
+
 # --- Zdroje ---
 SOURCES = [
     {

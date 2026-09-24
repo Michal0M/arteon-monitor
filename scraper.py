@@ -509,6 +509,16 @@ def main():
             stats = run_source(source, conn)
             print(f"[{source['name']}] Súhrn: {stats}")
 
+        # Druhý zdroj - autobazar.sk (úplne iná štruktúra stránky/vyhľadávania,
+        # preto samostatný modul - viď hlavička autobazar_scraper.py). Import
+        # je zámerne AŽ TU vnútri funkcie, nie na začiatku súboru - autobazar_scraper.py
+        # importuje TENTO modul (kvôli zdieľanej extract_vin()), takže import na
+        # úrovni súboru by spôsobil cyklický import.
+        import autobazar_scraper
+        print(f"\n=== Zdroj: {autobazar_scraper.SOURCE_NAME} ===")
+        ab_stats = autobazar_scraper.run(conn)
+        print(f"[{autobazar_scraper.SOURCE_NAME}] Súhrn: {ab_stats}")
+
 
 if __name__ == "__main__":
     main()
