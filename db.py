@@ -156,6 +156,21 @@ def upsert_listing(conn, listing: dict) -> str:
     return "unchanged"
 
 
+def delete_listing(conn, listing_id: str) -> bool:
+    """
+    Natvrdo vymaže inzerát aj celú jeho cenovú históriu z DB.
+
+    Použije sa vtedy, keď inzerát prestane sedieť na kritériá v config.py
+    (napr. sa zmenil filter, alebo cena/km vyšli mimo rozsah) - to NIE je to
+    isté ako "predané/stiahnuté" (mark_missing_as_sold). Inzerát, ktorý len
+    nesedí na kritériá, sa má z tabuľky úplne stratiť, nie sa zobrazovať pod
+    "Predané" - tam patria len tie, čo reálne zmizli z ponuky.
+    """
+    cur = conn.execute("DELETE FROM listings WHERE id = ?", (listing_id,))
+    conn.execute("DELETE FROM price_history WHERE listing_id = ?", (listing_id,))
+    return cur.rowcount > 0
+
+
 def mark_missing_as_sold(conn, seen_ids: set[str], source: str) -> list[str]:
     """
     Inzeráty z daného zdroja, ktoré boli 'active' pri poslednom behu, ale teraz
