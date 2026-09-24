@@ -34,6 +34,8 @@
   .card-price { font-size: 20px; font-weight: 700; }
   .price-eur-note { font-size: 11px; color: var(--text-dim); margin-top: -4px; }
   .sold-price-note { font-size: 11px; color: var(--red); font-weight: 600; }
+  .vin-dupe-warning { font-size: 11px; color: var(--red); font-weight: 600; background: rgba(255,92,92,0.12); border: 1px solid var(--red); border-radius: 6px; padding: 4px 6px; }
+  .vin-dupe-warning a { color: var(--red); text-decoration: underline; }
   .price-history { font-size: 11px; color: var(--text-dim); }
   .price-history.price-down { color: var(--green); }
   .price-history.price-up { color: var(--red); }
@@ -45,10 +47,10 @@
 </head>
 <body>
   <h1>🚗 VW Arteon R-Line monitor</h1>
-  <div class="subtitle">Naposledy aktualizované: 2026-09-24 19:38 UTC · 3 aktívnych · 4 starších ako 2021 · 0 predaných/stiahnutých</div>
+  <div class="subtitle">Naposledy aktualizované: 2026-09-24 19:49 UTC · 0 aktívnych · 7 starších ako 2021 · 0 predaných/stiahnutých</div>
   <div class="controls">
-    <button class="filter-btn active" data-filter="active">Aktívne (3)</button>
-    <button class="filter-btn" data-filter="old">Staršie ako 2021 (4)</button>
+    <button class="filter-btn active" data-filter="active">Aktívne (0)</button>
+    <button class="filter-btn" data-filter="old">Staršie ako 2021 (7)</button>
     <button class="filter-btn" data-filter="all">Všetky (7)</button>
     <button class="filter-btn" data-filter="sold">Predané (0)</button>
   </div>
@@ -70,6 +72,7 @@
         
         
         
+        
         <div class="card-meta">
           <span>2018</span> ·
           <span>110 000 km</span> ·
@@ -83,19 +86,20 @@
       </div>
     </div>
 
-    <div class="card" data-price="24900.0" data-year="0" data-km="106146">
+    <div class="card card-old" data-price="24900.0" data-year="2020" data-km="106146">
       <a href="https://auto.bazos.sk/inzerat/195864839/volkswagen-arteon-20-tsi-r-line-dsg-nove-brzdy-a-tlmice.php" target="_blank" rel="noopener" class="card-photo-link">
         <img class="card-photo" src="https://www.bazos.sk/img/1t/839/195864839.jpg?t=1790250367" alt="Volkswagen Arteon 2.0 TSI R-Line DSG | Nové brzdy a tlmiče" loading="lazy" onerror="this.style.opacity=0.3">
       </a>
       <div class="card-body">
-        <div class="badges"><span class="badge badge-warn">Skontroluj fotky (facelift?)</span></div>
+        <div class="badges"><span class="badge badge-old">Staršie ako 2021</span><span class="badge badge-warn">Skontroluj fotky (facelift?)</span></div>
         <a href="https://auto.bazos.sk/inzerat/195864839/volkswagen-arteon-20-tsi-r-line-dsg-nove-brzdy-a-tlmice.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TSI R-Line DSG | Nové brzdy a tlmiče</a>
         <div class="card-price">24 900 EUR</div>
         
         
         
+        
         <div class="card-meta">
-          <span>?</span> ·
+          <span>2020</span> ·
           <span>106 146 km</span> ·
           <span>biel</span> ·
           <span>Púchov 020 01</span>
@@ -107,19 +111,20 @@
       </div>
     </div>
 
-    <div class="card" data-price="24990.0" data-year="2022" data-km="98575">
+    <div class="card card-old" data-price="24990.0" data-year="2020" data-km="98575">
       <a href="https://auto.bazos.sk/inzerat/195439833/volkswagen-arteon-20-tsi-bmt-r-line-dsg-a7-140kw-190hp.php" target="_blank" rel="noopener" class="card-photo-link">
         <img class="card-photo" src="https://www.bazos.sk/img/1t/833/195439833.jpg?t=1789734437" alt="Volkswagen Arteon 2.0 TSI BMT R-Line DSG A7 140kW 190HP" loading="lazy" onerror="this.style.opacity=0.3">
       </a>
       <div class="card-body">
-        <div class="badges"></div>
+        <div class="badges"><span class="badge badge-old">Staršie ako 2021</span><span class="badge badge-warn">Skontroluj fotky (facelift?)</span></div>
         <a href="https://auto.bazos.sk/inzerat/195439833/volkswagen-arteon-20-tsi-bmt-r-line-dsg-a7-140kw-190hp.php" target="_blank" rel="noopener" class="card-title">Volkswagen Arteon 2.0 TSI BMT R-Line DSG A7 140kW 190HP</a>
         <div class="card-price">24 990 EUR</div>
         
         
         
+        
         <div class="card-meta">
-          <span>2022</span> ·
+          <span>2020</span> ·
           <span>98 575 km</span> ·
           <span>biel</span> ·
           <span>Košice 040 11</span>
@@ -139,6 +144,7 @@
         <div class="badges"><span class="badge badge-old">Staršie ako 2021</span><span class="badge badge-warn">Skontroluj fotky (facelift?)</span></div>
         <a href="https://auto.bazos.sk/inzerat/195421620/vw-arteon-20-tsi-206kw-dsg-4motion-r-line.php" target="_blank" rel="noopener" class="card-title">VW Arteon 2.0 TSI 206kw Dsg 4Motion R-Line</a>
         <div class="card-price">26 500 EUR</div>
+        
         
         
         
@@ -166,6 +172,7 @@
         
         
         
+        
         <div class="card-meta">
           <span>2017</span> ·
           <span>117 354 km</span> ·
@@ -190,6 +197,7 @@
         
         
         
+        
         <div class="card-meta">
           <span>2020</span> ·
           <span>58 000 km</span> ·
@@ -203,19 +211,20 @@
       </div>
     </div>
 
-    <div class="card" data-price="27799.0" data-year="2021" data-km="58000">
+    <div class="card card-old" data-price="27799.0" data-year="2020" data-km="58000">
       <a href="https://auto.bazos.sk/inzerat/195319351/volkswagen-arteon-20-tsi-dsg-r-line.php" target="_blank" rel="noopener" class="card-photo-link">
         <img class="card-photo" src="https://www.bazos.sk/img/1t/351/195319351.jpg?t=1788802668" alt="VOLKSWAGEN ARTEON 2.0 TSI DSG R-LINE" loading="lazy" onerror="this.style.opacity=0.3">
       </a>
       <div class="card-body">
-        <div class="badges"><span class="badge badge-warn">Skontroluj fotky (facelift?)</span></div>
+        <div class="badges"><span class="badge badge-old">Staršie ako 2021</span><span class="badge badge-warn">Skontroluj fotky (facelift?)</span></div>
         <a href="https://auto.bazos.sk/inzerat/195319351/volkswagen-arteon-20-tsi-dsg-r-line.php" target="_blank" rel="noopener" class="card-title">VOLKSWAGEN ARTEON 2.0 TSI DSG R-LINE</a>
         <div class="card-price">27 799 EUR</div>
         
         
         
+        
         <div class="card-meta">
-          <span>2021</span> ·
+          <span>2020</span> ·
           <span>58 000 km</span> ·
           <span>strieborn</span> ·
           <span>Košice 040 01</span>
