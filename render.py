@@ -30,7 +30,27 @@ def price_trend_html(history: list[dict]) -> str:
     return f'<div class="price-history {css_class}">{arrow} história: {chain}</div>'
 
 
-def listing_card_html(listing: dict, history: list[dict]) -> str:
+def vin_dupe_warning_html(listing: dict, dupes_by_vin: dict) -> str:
+    """
+    Ak má tento inzerát VIN, ktorý sa zhoduje s iným (aktívnym alebo predaným)
+    inzerátom v DB, zobrazí výrazné upozornenie s odkazmi na tie druhé
+    inzeráty - typicky buď rovnaký predajca inzeruje na viacerých weboch,
+    alebo ide o podozrivý klon cudzieho inzerátu (viď find_duplicate_vins v db.py).
+    """
+    vin = listing.get("vin")
+    if not vin:
+        return ""
+    others = [o for o in dupes_by_vin.get(vin, []) if o["id"] != listing["id"]]
+    if not others:
+        return ""
+    links = " · ".join(
+        f'<a href="{o["url"]}" target="_blank" rel="noopener">{o["source"]} #{o["id"].split("_")[-1]}</a>'
+        for o in others
+    )
+    return f'<div class="vin-dupe-warning">⚠️ Rovnaké VIN ako iný inzerát: {links}</div>'
+
+
+def listing_card_html(listing: dict, history: list[dict], dupes_by_vin: dict) -> str:
     photos = json.loads(listing["all_photo_urls"] or "[]")
     main_photo = listing["main_photo_url"] or (photos[0] if photos else "")
     is_sold = listing["status"] != "active"
@@ -81,6 +101,7 @@ def listing_card_html(listing: dict, history: list[dict]) -> str:
         <div class="card-price">{price_display}</div>
         {price_eur_note}
         {sold_price_note}
+        {vin_dupe_warning_html(listing, dupes_by_vin)}
         {price_trend_html(history)}
         <div class="card-meta">
           <span>{listing['year_built'] or '?'}</span> ·
@@ -132,6 +153,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   .card-price {{ font-size: 20px; font-weight: 700; }}
   .price-eur-note {{ font-size: 11px; color: var(--text-dim); margin-top: -4px; }}
   .sold-price-note {{ font-size: 11px; color: var(--red); font-weight: 600; }}
+  .vin-dupe-warning {{ font-size: 11px; color: var(--red); font-weight: 600; background: rgba(255,92,92,0.12); border: 1px solid var(--red); border-radius: 6px; padding: 4px 6px; }}
+  .vin-dupe-warning a {{ color: var(--red); text-decoration: underline; }}
   .price-history {{ font-size: 11px; color: var(--text-dim); }}
   .price-history.price-down {{ color: var(--green); }}
   .price-history.price-up {{ color: var(--red); }}
@@ -237,10 +260,11 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 def render():
     with db.connect(config.DB_PATH) as conn:
         listings = db.get_all_listings(conn)
+        dupes_by_vin = db.find_duplicate_vins(conn)
         cards = []
         for listing in listings:
             history = db.get_price_history(conn, listing["id"])
-            cards.append(listing_card_html(listing, history))
+            cards.append(listing_card_html(listing, history, dupes_by_vin))
 
     def is_old(l):
         return l["year_built"] is not None and l["year_built"] < config.YEAR_MIN

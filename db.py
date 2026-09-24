@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS listings (
     year_built      INTEGER,
     km              INTEGER,
     color_guess     TEXT,               -- ktorá farba z config.COLORS bola nájdená v texte
+    vin             TEXT,               -- VIN vozidla, ak bol v texte uvedený (na detekciu duplicít, viď find_duplicate_vins)
     location        TEXT,
     main_photo_url  TEXT,
     all_photo_urls  TEXT,               -- JSON list
@@ -73,6 +74,15 @@ def connect(db_path: str):
 def init_db(db_path: str) -> None:
     with connect(db_path) as conn:
         conn.executescript(SCHEMA)
+        # Migrácia pre existujúce DB súbory vytvorené PRED pridaním stĺpca 'vin'
+        # (24.9.2026) - CREATE TABLE IF NOT EXISTS vyššie na existujúcu tabuľku
+        # nedopíše nové stĺpce, treba ALTER TABLE. Bezpečné spustiť opakovane -
+        # ak stĺpec už existuje, len to preskočíme.
+        try:
+            conn.execute("ALTER TABLE listings ADD COLUMN vin TEXT")
+        except sqlite3.OperationalError:
+            pass
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_listings_vin ON listings(vin)")
 
 
 def get_listing(conn, listing_id: str):
@@ -101,17 +111,17 @@ def upsert_listing(conn, listing: dict) -> str:
             """
             INSERT INTO listings (
                 id, source, url, title, description_raw, current_price, currency,
-                price_eur_est, year_built, km, color_guess, location,
+                price_eur_est, year_built, km, color_guess, vin, location,
                 main_photo_url, all_photo_urls, needs_photo_check, status,
                 first_seen_at, last_seen_at, removed_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', ?, ?, NULL)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', ?, ?, NULL)
             """,
             (
                 listing["id"], listing["source"], listing["url"], listing["title"],
                 listing.get("description_raw"), listing.get("current_price"),
                 listing.get("currency"), listing.get("price_eur_est"),
                 listing.get("year_built"), listing.get("km"), listing.get("color_guess"),
-                listing.get("location"), listing.get("main_photo_url"),
+                listing.get("vin"), listing.get("location"), listing.get("main_photo_url"),
                 listing.get("all_photo_urls"), int(listing.get("needs_photo_check", 0)),
                 ts, ts,
             ),
@@ -131,7 +141,7 @@ def upsert_listing(conn, listing: dict) -> str:
         """
         UPDATE listings SET
             title = ?, description_raw = ?, current_price = ?, currency = ?,
-            price_eur_est = ?, year_built = ?, km = ?, color_guess = ?,
+            price_eur_est = ?, year_built = ?, km = ?, color_guess = ?, vin = ?,
             location = ?, main_photo_url = ?, all_photo_urls = ?,
             needs_photo_check = ?, status = 'active', last_seen_at = ?, removed_at = NULL
         WHERE id = ?
@@ -140,7 +150,7 @@ def upsert_listing(conn, listing: dict) -> str:
             listing["title"], listing.get("description_raw"), new_price,
             listing.get("currency"), listing.get("price_eur_est"),
             listing.get("year_built"), listing.get("km"), listing.get("color_guess"),
-            listing.get("location"), listing.get("main_photo_url"),
+            listing.get("vin"), listing.get("location"), listing.get("main_photo_url"),
             listing.get("all_photo_urls"), int(listing.get("needs_photo_check", 0)),
             ts, listing["id"],
         ),
@@ -203,6 +213,27 @@ def get_price_history(conn, listing_id: str):
         (listing_id,),
     ).fetchall()
     return [dict(r) for r in rows]
+
+
+def find_duplicate_vins(conn) -> dict[str, list[dict]]:
+    """
+    Vráti mapu {vin: [zoznam inzerátov s týmto VIN]} - LEN pre VIN-y, ktoré sa
+    vyskytujú vo VIAC ako jednom inzeráte, naprieč VŠETKÝMI zdrojmi a bez
+    ohľadu na status (aktívny/predaný) - to isté auto (VIN) inzerované
+    viackrát (aj na rôznych stránkach, keď pribudnú ďalšie zdroje) je buď
+    bežný súbežný inzerát u viacerých predajcov/bazárov, alebo podozrivý
+    klon cudzieho inzerátu pod iným menom/telefónom (viď rozhovor s Michalom
+    24.9.2026 - dva inzeráty s identickým popisom/výbavou, ale iný predajca
+    a telefón). Toto len NÁJDE zhodu, posúdenie/rozhodnutie necháva na render.py + používateľa.
+    """
+    rows = conn.execute(
+        "SELECT id, source, url, title, vin, current_price, status FROM listings "
+        "WHERE vin IS NOT NULL AND vin != ''"
+    ).fetchall()
+    by_vin: dict[str, list[dict]] = {}
+    for row in rows:
+        by_vin.setdefault(row["vin"], []).append(dict(row))
+    return {vin: items for vin, items in by_vin.items() if len(items) > 1}
 
 
 def get_all_listings(conn, status: str | None = None):

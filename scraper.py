@@ -205,18 +205,34 @@ def extract_detail_price(soup: BeautifulSoup) -> float | None:
 
 
 def extract_year(text: str) -> int | None:
-    """Skúša viacero bežných formátov: 'rok výroby 11/2020, model 2021', 'r.v.: 9/2022', 'Vyrobeno: 2017'."""
+    """
+    Skúša viacero bežných formátov, vrátane variantov s/bez medzier okolo
+    bodky/lomky (predajcovia píšu dátum úplne rôzne):
+    'rok výroby 11/2020', 'rok výroby: 2 / 2020', 'r.v.:9/2022', 'r.v.2019',
+    'Rok výroby: 17.10.2017', 'Vyrobeno: 2017', 'prvé prihlásenie 1/2020',
+    'model 2021'.
+
+    DÔLEŽITÉ poradie vzorov: "rok výroby"/"r.v."/"vyrobeno" (skutočný rok
+    výroby, priamo označený v texte) MUSÍ mať prioritu PRED "model YYYY"
+    (marketingový "model rok", ktorý predajcovia píšu popri skutočnom roku
+    výroby a je typicky o rok vyšší - napr. "rok výroby 11/2020, model 2021").
+    Keby "model" vyhral, dostali by sme systematicky nesprávny, vyšší rok.
+    "model" preto slúži len ako slabší fallback, keď v texte nie je žiadny
+    explicitný "rok výroby"/"r.v."/"vyrobeno" label.
+    """
+    # deň/mesiac je nepovinný a môže mať medzery okolo oddeľovača (./ alebo /)
+    optional_day_month = r"(?:\d{1,2}\s*[./]\s*)?"
     patterns = [
-        r"model\s+(20\d{2})",
-        r"r\.?v\.?\s*:?\s*\d{1,2}\s*/\s*(20\d{2})",
-        r"rok\s+výroby\D{0,10}(20\d{2})",
-        r"rok\s+vyroby\D{0,10}(20\d{2})",
+        # 1. najvyššia priorita: explicitný "rok výroby"/"r.v." label
+        rf"(?:rok\s+výroby|rok\s+vyroby|r\.?v\.?)\s*:?\s*{optional_day_month}{optional_day_month}(20\d{{2}})",
         r"vyrobeno\s*:?\s*(20\d{2})",
-        # "Rok výroby: 17.10.2017" - celý dátum d.m.rrrr formát
-        r"\d{1,2}\.\d{1,2}\.(20\d{2})",
-        r"\b\d{1,2}/(20\d{2})\b",
-        # "r.v.2019" - skratka priamo pred rokom, bez bodky/lomky/medzery
-        r"r\.?v\.?\s*:?\s*(20\d{2})\b",
+        # 2. slabší fallback: marketingový "model YYYY" (len ak vyššie nič nesedelo)
+        r"model\s+(20\d{2})",
+        # 3. posledná záchranná sieť - prvý výskyt "d/rrrr" alebo "d.rrrr" kdekoľvek
+        #    v texte (napr. "prvé prihlásenie 1/2020"). Berieme PRVÝ výskyt v texte,
+        #    lebo dátum registrácie/výroby zvyčajne stojí skôr ako iné dátumy
+        #    v inzeráte (napr. dátum prevodu na súčasného majiteľa, platnosť STK).
+        r"\d{1,2}\s*[./]\s*(20\d{2})",
     ]
     for pat in patterns:
         m = re.search(pat, text, re.IGNORECASE)
@@ -264,6 +280,18 @@ def extract_km(text: str) -> int | None:
             if digits and 100 <= int(digits) <= 900_000:
                 return int(digits)
     return None
+
+
+def extract_vin(text: str) -> str | None:
+    """
+    VIN (17 znakov, bez I/O/Q - tie sa v štandarde nepoužívajú, aby sa
+    nezamieňali s 1/0). Hľadá sa len pri labeli 'VIN' (nie kdekoľvek v texte -
+    generický 17-znakový reťazec by mohol byť čokoľvek iné, napr. sériové
+    číslo servisného úkonu). Normalizuje na veľké písmená pre spoľahlivé
+    porovnávanie duplicít naprieč inzerátmi (viď find_duplicate_vins v db.py).
+    """
+    m = re.search(r"\bvin\W{0,5}([A-HJ-NPR-Z0-9]{17})\b", text, re.IGNORECASE)
+    return m.group(1).upper() if m else None
 
 
 def extract_color(text: str) -> str | None:
@@ -317,6 +345,7 @@ def parse_detail_page(html: str, image_base_url: str) -> dict:
         "year_built": extract_year(own_text),
         "km": extract_km(own_text),
         "color_guess": extract_color(own_text),
+        "vin": extract_vin(own_text),
         "all_photo_urls": json.dumps(sorted(set(photos))[:20]),
     }
 
@@ -435,6 +464,7 @@ def run_source(source: dict, conn) -> dict:
                 "year_built": detail["year_built"],
                 "km": detail["km"],
                 "color_guess": detail["color_guess"],
+                "vin": detail["vin"],
                 "location": candidate["location"],
                 "main_photo_url": candidate["main_photo_url"],
                 "all_photo_urls": detail["all_photo_urls"],

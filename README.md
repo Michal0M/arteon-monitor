@@ -95,6 +95,18 @@ ktorú vieme zo statického inzerátu získať. Skutočná dohodnutá cena (po
 prípadnom zjednávaní na mieste) sa nedá zistiť automaticky - bazos ju nikde
 nezverejňuje.
 
+## Detekcia duplicitných VIN (podozrenie na klon inzerátu)
+
+Ak sa v texte inzerátu nájde VIN (pri labeli "VIN:"), uloží sa a porovnáva
+naprieč VŠETKÝMI inzerátmi v databáze (aj naprieč zdrojmi - pripravené aj na
+budúce ďalšie stránky, nie len bazos.sk/cz). Ak má inzerát rovnaké VIN ako
+iný inzerát (aktívny alebo predaný), zobrazí sa na karte výrazné červené
+upozornenie s odkazmi na tie ostatné inzeráty. Nemusí to vždy znamenať scam -
+môže ísť aj o predajcu/bazár, ktorý to isté auto legitímne inzeruje na
+viacerých weboch - ale keď sa k tomu pridá iné meno/telefón a mierne odlišná
+cena, je to silný signál na overenie pred kontaktovaním. Funguje len pre
+inzeráty, ktoré VIN vôbec uvádzajú - chýbajúci VIN sa nedá porovnať.
+
 ## Známe obmedzenia
 
 - **"Nová palubovka" (facelift interiér)** sa nedá spoľahlivo zistiť z textu
