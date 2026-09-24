@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+tests/test_fixtures_*.html
+.DS_Store
