@@ -166,8 +166,12 @@ def delete_listing(conn, listing_id: str) -> bool:
     nesedí na kritériá, sa má z tabuľky úplne stratiť, nie sa zobrazovať pod
     "Predané" - tam patria len tie, čo reálne zmizli z ponuky.
     """
-    cur = conn.execute("DELETE FROM listings WHERE id = ?", (listing_id,))
+    # POZOR na poradie: price_history má FOREIGN KEY na listings.id a foreign_keys
+    # je zapnuté (PRAGMA foreign_keys = ON v connect()) - najprv MUSÍME zmazať
+    # "dieťa" (price_history), až potom "rodiča" (listings), inak SQLite to
+    # odmietne s IntegrityError: FOREIGN KEY constraint failed.
     conn.execute("DELETE FROM price_history WHERE listing_id = ?", (listing_id,))
+    cur = conn.execute("DELETE FROM listings WHERE id = ?", (listing_id,))
     return cur.rowcount > 0
 
 
