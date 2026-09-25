@@ -96,10 +96,18 @@ def listing_card_html(listing: dict, history: list[dict], dupes_by_vin: dict) ->
         "card-old" if is_old_year else "",
         "card-color" if is_secondary_color else "",
     ]))
+    # Keď nemáme fotku (napr. autobazar_sk), nevykresľuj <img src=""> - prázdny
+    # src si prehliadač vyloží ako odkaz na aktuálnu stránku a zobrazí "rozbitú"
+    # ikonku namiesto ničoho. Namiesto toho placeholder div bez src.
+    if main_photo:
+        photo_html = f'<img class="card-photo" src="{main_photo}" alt="{listing["title"]}" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';"><div class="card-photo card-photo-placeholder" style="display:none;">Bez fotky</div>'
+    else:
+        photo_html = f'<div class="card-photo card-photo-placeholder">Bez fotky</div>'
+
     return f"""
     <div class="{card_classes}" data-price="{listing['current_price'] or 0}" data-year="{listing['year_built'] or 0}" data-km="{listing['km'] or 0}">
       <a href="{listing['url']}" target="_blank" rel="noopener" class="card-photo-link">
-        <img class="card-photo" src="{main_photo}" alt="{listing['title']}" loading="lazy" onerror="this.style.opacity=0.3">
+        {photo_html}
       </a>
       <div class="card-body">
         <div class="badges">{''.join(badges)}</div>
@@ -147,6 +155,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   .card-sold {{ opacity: 0.5; }}
   .card-photo-link {{ display: block; }}
   .card-photo {{ width: 100%; height: 170px; object-fit: cover; background: #000; display: block; }}
+  .card-photo-placeholder {{ align-items: center; justify-content: center; color: var(--text-dim); font-size: 12px; background: #15171c; }}
   .card-body {{ padding: 12px; display: flex; flex-direction: column; gap: 6px; }}
   .badges {{ display: flex; gap: 4px; flex-wrap: wrap; }}
   .badge {{ font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 600; }}

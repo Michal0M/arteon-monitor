@@ -49,6 +49,25 @@ DÔLEŽITÉ ZISTENIA (prieskum 25.9.2026, cez interaktívny prehliadač):
    strana (14 áut celkom, bežne pod limitom jednej stránky). Ak by počet
    niekedy prekročil to, čo vráti prvá strana, run() to nezachytí - toto je
    známe obmedzenie, TODO ak by bolo treba viac ako ~20-30 výsledkov.
+
+8. ZDROJ JE NEFUNKČNÝ - ZISTENÉ 25.9.2026, cez debug výpis priamo v produkčnom
+   behu na GitHub Actions (rovnaký princíp ako pri fotkách na autobazar.sk -
+   žiadne hádanie). `requests.get()` na vyhľadávaciu stránku nedostane
+   výsledky, ale stránku anti-bot ochrany "Anubis" (Ujišťujeme se, že nejste
+   robot!, hlavička <title>, /.within.website/x/... assety) - JS
+   proof-of-work challenge, ktorý treba vyriešiť v prehliadači predtým, než
+   server pustí skutočný obsah. Toto NIE JE to isté ako JS-rendering
+   problém na autobazar.sk (tam stránka nebola chránená, len fotky
+   dogenerovával JS po načítaní) - toto je AKTÍVNE blokovanie robotov.
+   `requests`-based scraper to nikdy neprejde, žiadna úprava regexu/URL to
+   nevyrieši. Jediné riešenie by bol headless prehliadač s reálnym JS
+   engine (napr. Playwright), ktorý navyše musí vyriešiť aj samotný
+   proof-of-work - výrazne väčší zásah než čo bolo zvažované a zamietnuté
+   pri fotkách na autobazar.sk. `run()` preto teraz hneď na začiatku vypíše
+   jasnú správu a skončí bez pokusu o scraping (zbytočné by bolo skúšať to
+   denne, keď je isté, že to zlyhá) - zdroj je DOČASNE VYPNUTÝ v scraper.py
+   main(), kód ale zostáva v repozitári pre prípad, že by sa k tomu niekedy
+   išlo vrátiť (napr. cez Playwright).
 """
 
 import json
@@ -233,9 +252,22 @@ def parse_detail_page(html: str) -> dict:
     }
 
 
+DISABLED = True  # viď bod 8 v hlavičke súboru - aaaauto.sk blokuje requests.get() cez Anubis anti-bot
+
+
 def run(conn) -> dict:
     """Spracuje aaaauto.sk. Vráti rovnaký typ štatistík ako scraper.run_source."""
     stats = {"new": 0, "price_changed": 0, "unchanged": 0, "skipped_criteria": 0, "sold": 0}
+
+    if DISABLED:
+        print(
+            f"[{SOURCE_NAME}] VYPNUTÉ: aaaauto.sk blokuje requests.get() cez "
+            f"anti-bot ochranu (Anubis proof-of-work challenge) - overené "
+            f"25.9.2026, viď bod 8 v hlavičke aaaauto_scraper.py. Bez "
+            f"headless prehliadača (Playwright) sa to nedá obísť."
+        )
+        return stats
+
     seen_ids = set()
     all_detail: dict[str, str] = {}
 
@@ -249,15 +281,6 @@ def run(conn) -> dict:
             break
 
         found = extract_detail_urls(resp.text)
-        if page_num == 1 and not found:
-            # DOČASNÉ (25.9.2026): prvý reálny beh vrátil 0 inzerátov - potrebujeme
-            # zistiť PREČO priamo zo surového HTML, ktoré requests.get() reálne dostal
-            # (rovnaký princíp ako debug pri fotkách na autobazar.sk - žiadne hádanie).
-            html = resp.text
-            print(f"[{SOURCE_NAME}] DEBUG: dĺžka stiahnutého HTML = {len(html)} znakov")
-            print(f"[{SOURCE_NAME}] DEBUG: počet výskytov '/detail/' v HTML = {html.count('/detail/')}")
-            print(f"[{SOURCE_NAME}] DEBUG: počet výskytov 'Arteon' v HTML = {html.count('Arteon')}")
-            print(f"[{SOURCE_NAME}] DEBUG: prvých 1500 znakov HTML:\n{html[:1500]}")
         new_on_page = [(u, i) for u, i in found if i not in all_detail]
         if not new_on_page:
             print(f"[{SOURCE_NAME}] Žiadne nové inzeráty na tejto stránke, koniec stránkovania.")

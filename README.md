@@ -132,3 +132,8 @@ je prvá voľba farby, pri dostatočne výhodnej ponuke prichádza do úvahy kú
 - Scraper pokrýva **bazos.sk, bazos.cz a autobazar.sk**. Iné SK/CZ autobazáre
   (sauto.cz, autoscout24.sk, mobile.de) majú v `robots.txt` plošný zákaz
   crawlovania a neboli zahrnuté.
+- **aaaauto.sk je v kóde (`aaaauto_scraper.py`), ale VYPNUTÝ** - stránka
+  blokuje jednoduché `requests.get()` sťahovanie cez anti-bot ochranu
+  Anubis (JS proof-of-work challenge, overené 25.9.2026 priamo v produkčnom
+  behu). Bez headless prehliadača (Playwright) sa to nedá obísť - viď bod 8
+  v hlavičke `aaaauto_scraper.py`.
