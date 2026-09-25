@@ -249,6 +249,15 @@ def run(conn) -> dict:
             break
 
         found = extract_detail_urls(resp.text)
+        if page_num == 1 and not found:
+            # DOČASNÉ (25.9.2026): prvý reálny beh vrátil 0 inzerátov - potrebujeme
+            # zistiť PREČO priamo zo surového HTML, ktoré requests.get() reálne dostal
+            # (rovnaký princíp ako debug pri fotkách na autobazar.sk - žiadne hádanie).
+            html = resp.text
+            print(f"[{SOURCE_NAME}] DEBUG: dĺžka stiahnutého HTML = {len(html)} znakov")
+            print(f"[{SOURCE_NAME}] DEBUG: počet výskytov '/detail/' v HTML = {html.count('/detail/')}")
+            print(f"[{SOURCE_NAME}] DEBUG: počet výskytov 'Arteon' v HTML = {html.count('Arteon')}")
+            print(f"[{SOURCE_NAME}] DEBUG: prvých 1500 znakov HTML:\n{html[:1500]}")
         new_on_page = [(u, i) for u, i in found if i not in all_detail]
         if not new_on_page:
             print(f"[{SOURCE_NAME}] Žiadne nové inzeráty na tejto stránke, koniec stránkovania.")
