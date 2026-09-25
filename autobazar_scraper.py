@@ -214,11 +214,26 @@ def _debug_print_image_urls(html: str, listing_id: str) -> None:
     global _DEBUG_PHOTO_PRINTS_LEFT
     if _DEBUG_PHOTO_PRINTS_LEFT <= 0:
         return
-    urls = re.findall(r'https?://[^\s"\'<>]+\.(?:jpg|jpeg|webp|png)(?:\?[^\s"\'<>]*)?', html, re.IGNORECASE)
-    unique = sorted(set(urls))
-    print(f"[{SOURCE_NAME}] DEBUG FOTKY (inzerát {listing_id}) - nájdených {len(unique)} unikátnych obrázkových URL, prvých 15:")
-    for u in unique[:15]:
-        print(f"    {u}")
+
+    # Kolo 1 (prvý pokus - NEUSPEŠNÉ): hľadanie čistých "https://...jpg" URL
+    # v surovom HTML nenašlo nič relevantné, len 2 statické ikonky webu na
+    # inzerát (logo, ikonka splátok) - žiadne fotky auta. To znamená, že
+    # skutočné URL fotiek buď (a) nie sú v statickom HTML vôbec (JS/API
+    # dohráva galériu po načítaní), alebo (b) SÚ v HTML, ale v inom tvare,
+    # než "https://" - napr. JSON s escapovanými lomkami "https:\/\/...",
+    # cesta bez protokolu "//cdn.../x.jpg", alebo v <script type="application/ld+json">.
+    #
+    # Kolo 2 (toto): namiesto hádania presného tvaru URL len vypíšeme SUROVÝ
+    # KONTEXT okolo každého výskytu prípony obrázku (.jpg/.jpeg/.webp/.png)
+    # kdekoľvek v HTML - nech vidíme skutočný tvar (escapovanie, protokol,
+    # doménu) a podľa toho napíšeme presný regex.
+    ext_positions = [m.start() for m in re.finditer(r"\.(?:jpg|jpeg|webp|png)", html, re.IGNORECASE)]
+    print(f"[{SOURCE_NAME}] DEBUG FOTKY kolo 2 (inzerát {listing_id}) - {len(ext_positions)} výskytov prípony obrázku, kontext okolo prvých 12:")
+    for pos in ext_positions[:12]:
+        start = max(0, pos - 90)
+        end = min(len(html), pos + 10)
+        snippet = html[start:end].replace("\n", " ").replace("\r", " ")
+        print(f"    ...{snippet}...")
     _DEBUG_PHOTO_PRINTS_LEFT -= 1
 
 
