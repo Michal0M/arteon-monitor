@@ -39,7 +39,7 @@ SECONDARY_COLOR_FRAGMENTS = ["cerven", "červen", "modr"]  # červená, modrá
 # Karoséria "veľký kufor" (kombi / Shooting Brake) - NECHCEME, len klasický liftback/sedan.
 # "sb" sa kontroluje ako samostatné slovo (regex \bsb\b), nie ako podreťazec,
 # aby to nevyhodilo niečo, čo náhodou obsahuje "sb" v inom slove.
-EXCLUDE_BODY_STYLE_CONTAINS = ["shooting brake", "kombi", "kombík"]
+EXCLUDE_BODY_STYLE_CONTAINS = ["shooting brake", "kombi", "kombík", "combi"]  # "combi" (bez k) je označenie na aaaauto.sk
 EXCLUDE_BODY_STYLE_REGEX = [r"\bsb\b"]
 
 # Motor - chceme len čisté benzínové TSI, nie naftu (TDI) ani hybrid (eHybrid/PHEV
@@ -70,6 +70,18 @@ FACELIFT_CHECK_YEAR_THRESHOLD = 2022  # ročníky < tohto roka sa označia na ma
 # si niekedy sledoval iný model, treba zmeniť aj toto (nedá sa odvodiť z KEYWORD
 # automaticky, lebo autobazar.sk používa vlastné SEO-slug názvy modelov).
 AUTOBAZAR_SEARCH_URL = "https://volkswagen-arteon.autobazar.sk/"
+
+# --- Tretí zdroj: aaaauto.sk ---
+# Overené 25.9.2026 (rozhovor s Michalom) - robots.txt povoľuje vyhľadávanie
+# (/ojazdene-vozidla/...) aj detail (/detail/...), blokuje len /car/, /garage/
+# a pár admin ciest, do ktorých nepôjdeme. Štruktúrované polia na detaile
+# (Cena, Registrácia, Tachometer, Farba, VIN, Palivo, Motor, Karoséria) - VIN
+# priamo v štruktúrovanom poli, netreba ho hľadať vo voľnom texte ako na bazoši.
+# POZOR: "Cena" (skutočná hotovostná cena) treba odlíšiť od "Akciová cena na
+# úver" (splátková/finančná cena, býva nižšia) - pozri aaaauto_scraper.py.
+# R-Line NIE JE samostatné štruktúrované pole - zisťuje sa z voľného textu
+# (rovnako ako na bazoši).
+AAAAUTO_SEARCH_URL = "https://www.aaaauto.sk/ojazdene-vozidla/volkswagen/arteon/"
 
 # --- Zdroje ---
 SOURCES = [

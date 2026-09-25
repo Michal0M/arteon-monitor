@@ -537,6 +537,14 @@ def main():
         ab_stats = autobazar_scraper.run(conn)
         print(f"[{autobazar_scraper.SOURCE_NAME}] Súhrn: {ab_stats}")
 
+        # Tretí zdroj - aaaauto.sk (viď hlavička aaaauto_scraper.py). Import
+        # zámerne AŽ TU z rovnakého dôvodu ako pri autobazar_scraper vyššie
+        # (zdieľaný import scraper -> cyklický import, keby bol na úrovni súboru).
+        import aaaauto_scraper
+        print(f"\n=== Zdroj: {aaaauto_scraper.SOURCE_NAME} ===")
+        aaa_stats = aaaauto_scraper.run(conn)
+        print(f"[{aaaauto_scraper.SOURCE_NAME}] Súhrn: {aaa_stats}")
+
 
 if __name__ == "__main__":
     main()
