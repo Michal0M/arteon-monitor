@@ -196,6 +196,32 @@ def matches_criteria(own_text: str, title: str) -> str | None:
     return None
 
 
+_DEBUG_PHOTO_PRINTS_LEFT = 3  # dočasné - vypni/zmaž po tom, čo nájdeme fotky (viď TODO bod 4 v hlavičke)
+
+
+def _debug_print_image_urls(html: str, listing_id: str) -> None:
+    """
+    DOČASNÉ (24.9.2026): keďže sa nepodarilo zistiť formát URL fotiek cez
+    interaktívne prehliadačové nástroje (network log ich nezachytil, JS
+    injection v danej session nefungoval), skúšame to najspoľahlivejšie -
+    priamo na surovom HTML, ktoré scraper reálne stiahne cez requests.get()
+    (na rozdiel od interaktívneho prehliadača tu nič neblokuje TSPD ani iná
+    ochrana - to je už overené produkčne). Vypíše prvých pár nájdených
+    obrázkových URL do GitHub Actions logu pre prvé 3 spracované inzeráty,
+    aby sme videli skutočný formát a mohli ho zakódovať do parse_detail_page().
+    Po vyriešení fotiek túto funkciu aj jej volanie v run() ZMAZAŤ.
+    """
+    global _DEBUG_PHOTO_PRINTS_LEFT
+    if _DEBUG_PHOTO_PRINTS_LEFT <= 0:
+        return
+    urls = re.findall(r'https?://[^\s"\'<>]+\.(?:jpg|jpeg|webp|png)(?:\?[^\s"\'<>]*)?', html, re.IGNORECASE)
+    unique = sorted(set(urls))
+    print(f"[{SOURCE_NAME}] DEBUG FOTKY (inzerát {listing_id}) - nájdených {len(unique)} unikátnych obrázkových URL, prvých 15:")
+    for u in unique[:15]:
+        print(f"    {u}")
+    _DEBUG_PHOTO_PRINTS_LEFT -= 1
+
+
 def parse_detail_page(html: str) -> dict:
     soup = BeautifulSoup(html, "html.parser")
     body_text = soup.get_text("\n", strip=True)
@@ -258,6 +284,7 @@ def run(conn) -> dict:
             print(f"[{SOURCE_NAME}] Nepodarilo sa načítať detail {url}: {e}")
             continue
 
+        _debug_print_image_urls(detail_resp.text, listing_id)  # DOČASNÉ - viď komentár pri funkcii
         detail = parse_detail_page(detail_resp.text)
         title = detail["title"] or url
 
