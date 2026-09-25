@@ -25,11 +25,18 @@ DÔLEŽITÉ ROZDIELY OPROTI BAZOSU (zistené prieskumom 24.9.2026):
    znamená to, že nás TSPD blokuje a treba iný prístup (napr. headless
    prehliadač namiesto requests - výrazne väčšia zmena).
 
-4. Fotky: NEPODARILO sa mi spoľahlivo zistiť skutočný formát URL fotiek
-   (galéria sa dohráva cez API volania, ktoré sa v dostupnom network logu
-   stratili v TSPD šume). `all_photo_urls`/`main_photo_url` preto zatiaľ
+4. Fotky: OVERENÉ (25.9.2026, cez dočasný debug výpis priamo v produkčnom
+   behu na GitHub Actions) - v surovom HTML, ktoré stiahne `requests.get()`,
+   NIE JE ani jedna URL fotky auta. Galéria (78 fotiek na detail stránke)
+   sa dohráva až cez JavaScript/API volania PO načítaní stránky v prehliadači -
+   obyčajný `requests`-based scraper (rovnaký prístup ako na bazoši, ktorý
+   tam funguje) ju principiálne nemôže vidieť, nejde o chybu regexu ani
+   o TSPD blokovanie. Riešenie by vyžadovalo headless prehliadač (napr.
+   Playwright s Chromium) v GitHub Actions namiesto `requests` - výrazne
+   väčšia zmena (pomalšie, krehkejšie, treba doinštalovať Chromium do
+   workflow) - zatiaľ NEIMPLEMENTOVANÉ, čaká sa na rozhodnutie Michala,
+   či to stojí za tú komplikáciu. `all_photo_urls`/`main_photo_url` preto
    ostávajú prázdne - dashboard to zvláda bez pádu (karta bez fotky).
-   TODO: doplniť, keď budeme mať k dispozícii reálne stiahnuté HTML.
 
 5. VIN: dealerské inzeráty (autobazár ako firma) VIN v štruktúrovanom poli
    nezobrazujú. Súkromné inzeráty ho môžu mať vo voľnom texte poznámky -
@@ -196,47 +203,6 @@ def matches_criteria(own_text: str, title: str) -> str | None:
     return None
 
 
-_DEBUG_PHOTO_PRINTS_LEFT = 3  # dočasné - vypni/zmaž po tom, čo nájdeme fotky (viď TODO bod 4 v hlavičke)
-
-
-def _debug_print_image_urls(html: str, listing_id: str) -> None:
-    """
-    DOČASNÉ (24.9.2026): keďže sa nepodarilo zistiť formát URL fotiek cez
-    interaktívne prehliadačové nástroje (network log ich nezachytil, JS
-    injection v danej session nefungoval), skúšame to najspoľahlivejšie -
-    priamo na surovom HTML, ktoré scraper reálne stiahne cez requests.get()
-    (na rozdiel od interaktívneho prehliadača tu nič neblokuje TSPD ani iná
-    ochrana - to je už overené produkčne). Vypíše prvých pár nájdených
-    obrázkových URL do GitHub Actions logu pre prvé 3 spracované inzeráty,
-    aby sme videli skutočný formát a mohli ho zakódovať do parse_detail_page().
-    Po vyriešení fotiek túto funkciu aj jej volanie v run() ZMAZAŤ.
-    """
-    global _DEBUG_PHOTO_PRINTS_LEFT
-    if _DEBUG_PHOTO_PRINTS_LEFT <= 0:
-        return
-
-    # Kolo 1 (prvý pokus - NEUSPEŠNÉ): hľadanie čistých "https://...jpg" URL
-    # v surovom HTML nenašlo nič relevantné, len 2 statické ikonky webu na
-    # inzerát (logo, ikonka splátok) - žiadne fotky auta. To znamená, že
-    # skutočné URL fotiek buď (a) nie sú v statickom HTML vôbec (JS/API
-    # dohráva galériu po načítaní), alebo (b) SÚ v HTML, ale v inom tvare,
-    # než "https://" - napr. JSON s escapovanými lomkami "https:\/\/...",
-    # cesta bez protokolu "//cdn.../x.jpg", alebo v <script type="application/ld+json">.
-    #
-    # Kolo 2 (toto): namiesto hádania presného tvaru URL len vypíšeme SUROVÝ
-    # KONTEXT okolo každého výskytu prípony obrázku (.jpg/.jpeg/.webp/.png)
-    # kdekoľvek v HTML - nech vidíme skutočný tvar (escapovanie, protokol,
-    # doménu) a podľa toho napíšeme presný regex.
-    ext_positions = [m.start() for m in re.finditer(r"\.(?:jpg|jpeg|webp|png)", html, re.IGNORECASE)]
-    print(f"[{SOURCE_NAME}] DEBUG FOTKY kolo 2 (inzerát {listing_id}) - {len(ext_positions)} výskytov prípony obrázku, kontext okolo prvých 12:")
-    for pos in ext_positions[:12]:
-        start = max(0, pos - 90)
-        end = min(len(html), pos + 10)
-        snippet = html[start:end].replace("\n", " ").replace("\r", " ")
-        print(f"    ...{snippet}...")
-    _DEBUG_PHOTO_PRINTS_LEFT -= 1
-
-
 def parse_detail_page(html: str) -> dict:
     soup = BeautifulSoup(html, "html.parser")
     body_text = soup.get_text("\n", strip=True)
@@ -299,7 +265,6 @@ def run(conn) -> dict:
             print(f"[{SOURCE_NAME}] Nepodarilo sa načítať detail {url}: {e}")
             continue
 
-        _debug_print_image_urls(detail_resp.text, listing_id)  # DOČASNÉ - viď komentár pri funkcii
         detail = parse_detail_page(detail_resp.text)
         title = detail["title"] or url
 
