@@ -52,6 +52,7 @@ from bs4 import BeautifulSoup
 
 import config
 import db
+import notify
 import scraper  # zdieľame extract_vin() - VIN sa hľadá rovnako ako na bazoši
 
 SOURCE_NAME = "autobazar_sk"
@@ -226,11 +227,18 @@ def parse_detail_page(html: str) -> dict:
     }
 
 
-def run(conn) -> dict:
-    """Spracuje autobazar.sk. Vráti rovnaký typ štatistík ako scraper.run_source."""
+def run(conn, pending: list | None = None) -> dict:
+    """Spracuje autobazar.sk. Vráti rovnaký typ štatistík ako scraper.run_source.
+
+    `pending` - viď rovnaký parameter v scraper.py run_source() (Discord
+    notifikácie, pridané 26.9.2026). Pri prvom behu (prázdna DB pre tento
+    zdroj) sa nič nepridáva."""
     stats = {"new": 0, "price_changed": 0, "unchanged": 0, "skipped_criteria": 0, "sold": 0}
     seen_ids = set()
     all_detail: dict[str, str] = {}
+    seeding = conn.execute(
+        "SELECT COUNT(*) FROM listings WHERE source = ?", (SOURCE_NAME,)
+    ).fetchone()[0] == 0
 
     for page_num in range(1, config.MAX_PAGES_PER_SOURCE + 1):
         search_url = build_search_url(page_num)
@@ -312,7 +320,13 @@ def run(conn) -> dict:
             "needs_photo_check": needs_check,
         }
 
+        prev = db.get_listing(conn, full_id)
         result = db.upsert_listing(conn, listing)
+        if pending is not None and not seeding:
+            kind = notify.kind_for(result, prev["current_price"] if prev else None, listing["current_price"])
+            if kind:
+                pending.append({"kind": kind, "listing": listing,
+                                 "old_price": prev["current_price"] if prev else None})
         stats[result] = stats.get(result, 0) + 1
         seen_ids.add(full_id)
         print(f"[{SOURCE_NAME}] {result.upper()}: {title} - {price_eur} EUR")

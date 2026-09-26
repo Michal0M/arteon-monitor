@@ -124,3 +124,9 @@ MAX_PAGES_PER_SOURCE = 10         # bezpečnostný strop, aby sa scraper nezacyk
 
 DB_PATH = "data/listings.db"
 OUTPUT_HTML_PATH = "docs/index.html"
+
+# --- Discord notifikácie (pridané 26.9.2026, podľa vzoru rental-monitor-bb) ---
+# Webhook URL sa berie VÝHRADNE z premennej prostredia DISCORD_WEBHOOK_AUTO
+# (GitHub Secret) - nikdy nie odtiaľto. Pozri notify.py.
+NOTIFY_MAX_PER_RUN = 20  # bezpečnostný strop - pri prvom behu po zmene filtra sa
+                         # môže naraz "objaviť" veľa inzerátov, nechceme spamovať kanál

@@ -47,6 +47,7 @@ from bs4 import BeautifulSoup
 
 import config
 import db
+import notify
 
 HEADERS = {
     "User-Agent": config.USER_AGENT,
@@ -396,7 +397,7 @@ def to_eur_estimate(price: float | None, currency: str) -> float | None:
     return price
 
 
-def run_source(source: dict, conn) -> dict:
+def run_source(source: dict, conn, pending: list | None = None) -> dict:
     """
     Spracuje jeden zdroj (bazos_sk / bazos_cz). Vráti štatistiky behu.
 
@@ -406,9 +407,18 @@ def run_source(source: dict, conn) -> dict:
     hľadali a vôbec sme ho nenašli v žiadnom výpise (skutočne zmizol z bazosu -
     predané/stiahnuté predajcom), sa označí ako 'sold_or_removed'
     (mark_missing_as_sold) a ZOSTÁVA viditeľný v tabuľke aj s históriou.
+
+    `pending` (voliteľné, pridané 26.9.2026 pre Discord notifikácie) - ak je
+    zadané, každý nový/zlacnený/zdražený/znovu-objavený inzerát sa doň pridá
+    na neskoršie odoslanie (notify.send_notifications). Pri PRVOM behu pre
+    tento zdroj (prázdna DB pre neho) sa nič nepridáva - inak by prvé
+    spustenie zaplavilo Discord kanál všetkým naraz.
     """
     stats = {"new": 0, "price_changed": 0, "unchanged": 0, "skipped_criteria": 0, "sold": 0}
     seen_ids = set()
+    seeding = conn.execute(
+        "SELECT COUNT(*) FROM listings WHERE source = ?", (source["name"],)
+    ).fetchone()[0] == 0
 
     for page_num in range(config.MAX_PAGES_PER_SOURCE):
         offset = page_num * 20
@@ -506,7 +516,13 @@ def run_source(source: dict, conn) -> dict:
                 "needs_photo_check": needs_check,
             }
 
+            prev = db.get_listing(conn, listing["id"])
             result = db.upsert_listing(conn, listing)
+            if pending is not None and not seeding:
+                kind = notify.kind_for(result, prev["current_price"] if prev else None, listing["current_price"])
+                if kind:
+                    pending.append({"kind": kind, "listing": listing,
+                                     "old_price": prev["current_price"] if prev else None})
             stats[result] = stats.get(result, 0) + 1
             seen_ids.add(candidate["id"])
             print(f"[{source['name']}] {result.upper()}: {candidate['title']} - {final_price} {source['currency']}")
@@ -521,10 +537,11 @@ def run_source(source: dict, conn) -> dict:
 
 def main():
     db.init_db(config.DB_PATH)
+    pending: list = []
     with db.connect(config.DB_PATH) as conn:
         for source in config.SOURCES:
             print(f"\n=== Zdroj: {source['name']} ===")
-            stats = run_source(source, conn)
+            stats = run_source(source, conn, pending)
             print(f"[{source['name']}] Súhrn: {stats}")
 
         # Druhý zdroj - autobazar.sk (úplne iná štruktúra stránky/vyhľadávania,
@@ -534,16 +551,25 @@ def main():
         # úrovni súboru by spôsobil cyklický import.
         import autobazar_scraper
         print(f"\n=== Zdroj: {autobazar_scraper.SOURCE_NAME} ===")
-        ab_stats = autobazar_scraper.run(conn)
+        ab_stats = autobazar_scraper.run(conn, pending)
         print(f"[{autobazar_scraper.SOURCE_NAME}] Súhrn: {ab_stats}")
 
         # Tretí zdroj - aaaauto.sk (viď hlavička aaaauto_scraper.py). Import
         # zámerne AŽ TU z rovnakého dôvodu ako pri autobazar_scraper vyššie
         # (zdieľaný import scraper -> cyklický import, keby bol na úrovni súboru).
+        # Momentálne vypnutý (anti-bot blok) - run() sa hneď vráti bez inzerátov,
+        # netreba mu teda posielať `pending`.
         import aaaauto_scraper
         print(f"\n=== Zdroj: {aaaauto_scraper.SOURCE_NAME} ===")
         aaa_stats = aaaauto_scraper.run(conn)
         print(f"[{aaaauto_scraper.SOURCE_NAME}] Súhrn: {aaa_stats}")
+
+    # Notifikácie AŽ PO uzavretí DB spojenia (commit už prebehol) - chyba pri
+    # odosielaní na Discord nesmie zhodiť scraper ani ovplyvniť uložené dáta.
+    try:
+        notify.send_notifications(pending)
+    except Exception as e:
+        print(f"[notify] neočakávaná chyba: {type(e).__name__}")
 
 
 if __name__ == "__main__":

@@ -108,7 +108,14 @@ def upsert_listing(conn, listing: dict) -> str:
           v listings, ale STARÝ záznam v price_history zostáva netknutý,
           pridá sa nový riadok s novou cenou a dnešným dátumom.
 
-    Vracia: 'new' | 'price_changed' | 'unchanged'
+    Vracia: 'new' | 'price_changed' | 'unchanged' | 'reappeared'
+
+    'reappeared' (pridané 26.9.2026 kvôli Discord notifikáciám, viď notify.py) -
+    inzerát bol predtým označený ako 'sold_or_removed' (mark_missing_as_sold),
+    ale teraz sa znova našiel v ponuke. UPDATE nižšie ho aj tak vždy prepne
+    naspäť na status='active' bez ohľadu na toto rozlíšenie - tu len
+    zaznamenávame, že IŠLO o reaktiváciu, aby o tom vedel notify.kind_for()
+    (má prioritu pred 'price_changed', ak sa zmenila cena AJ sa reaktivoval).
     """
     existing = get_listing(conn, listing["id"])
     ts = now_iso()
@@ -140,10 +147,11 @@ def upsert_listing(conn, listing: dict) -> str:
         )
         return "new"
 
-    # Inzerát existuje - zisti, či sa zmenila cena
+    # Inzerát existuje - zisti, či sa zmenila cena a či sa reaktivuje z 'sold_or_removed'
     old_price = existing["current_price"]
     new_price = listing.get("current_price")
     price_changed = old_price != new_price and new_price is not None
+    was_removed = existing["status"] != "active"
 
     conn.execute(
         """
@@ -170,9 +178,9 @@ def upsert_listing(conn, listing: dict) -> str:
             "INSERT INTO price_history (listing_id, price, currency, recorded_at) VALUES (?, ?, ?, ?)",
             (listing["id"], new_price, listing.get("currency"), ts),
         )
-        return "price_changed"
+        return "reappeared" if was_removed else "price_changed"
 
-    return "unchanged"
+    return "reappeared" if was_removed else "unchanged"
 
 
 def delete_listing(conn, listing_id: str) -> bool:
