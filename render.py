@@ -96,6 +96,10 @@ def listing_card_html(listing: dict, history: list[dict], dupes_by_vin: dict) ->
         "card-old" if is_old_year else "",
         "card-color" if is_secondary_color else "",
     ]))
+    # `id` je unikátne naprieč zdrojmi (napr. "bazos_sk_123456") - používa sa ako
+    # kľúč pre obľúbené v localStorage (pridané 26.9.2026, rovnaký vzor ako
+    # rental-monitor-bb: hviezdička sa ukladá len v tomto prehliadači, nie v DB).
+    pid = listing["id"]
     # Keď nemáme fotku (napr. autobazar_sk), nevykresľuj <img src=""> - prázdny
     # src si prehliadač vyloží ako odkaz na aktuálnu stránku a zobrazí "rozbitú"
     # ikonku namiesto ničoho. Namiesto toho placeholder div bez src.
@@ -105,7 +109,8 @@ def listing_card_html(listing: dict, history: list[dict], dupes_by_vin: dict) ->
         photo_html = f'<div class="card-photo card-photo-placeholder">Bez fotky</div>'
 
     return f"""
-    <div class="{card_classes}" data-price="{listing['current_price'] or 0}" data-year="{listing['year_built'] or 0}" data-km="{listing['km'] or 0}">
+    <div class="{card_classes}" data-pid="{pid}" data-price="{listing['current_price'] or 0}" data-year="{listing['year_built'] or 0}" data-km="{listing['km'] or 0}">
+      <button type="button" class="fav-btn" title="Pridať do obľúbených" aria-label="Pridať do obľúbených" aria-pressed="false">☆</button>
       <a href="{listing['url']}" target="_blank" rel="noopener" class="card-photo-link">
         {photo_html}
       </a>
@@ -151,8 +156,13 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   .controls button.active, .controls button.sort-btn-active {{ background: var(--accent); border-color: var(--accent); color: #fff; }}
   .sort-label {{ color: var(--text-dim); font-size: 13px; }}
   .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }}
-  .card {{ background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }}
+  .card {{ background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; position: relative; }}
   .card-sold {{ opacity: 0.5; }}
+  .card.is-fav {{ border-color: var(--yellow); }}
+  .fav-btn {{ position: absolute; top: 8px; right: 8px; z-index: 2; width: 34px; height: 34px; border-radius: 50%; border: none;
+              cursor: pointer; background: rgba(15,17,21,.7); color: #fff; font-size: 20px; line-height: 34px; padding: 0; }}
+  .fav-btn:hover {{ background: rgba(15,17,21,.9); }}
+  .fav-btn.on {{ color: var(--yellow); }}
   .card-photo-link {{ display: block; }}
   .card-photo {{ width: 100%; height: 170px; object-fit: cover; background: #000; display: block; }}
   .card-photo-placeholder {{ align-items: center; justify-content: center; color: var(--text-dim); font-size: 12px; background: #15171c; }}
@@ -184,6 +194,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   <h1>🚗 VW Arteon R-Line monitor</h1>
   <div class="subtitle">Naposledy aktualizované: {updated_at} · {active_count} aktívnych · {color_count} červených/modrých · {old_count} starších ako {year_min} · {sold_count} predaných/stiahnutých</div>
   <div class="controls">
+    <button class="filter-btn" data-filter="fav">★ Obľúbené (0)</button>
     <button class="filter-btn active" data-filter="active">Aktívne ({active_count})</button>
     <button class="filter-btn" data-filter="color">Červené/Modré ({color_count})</button>
     <button class="filter-btn" data-filter="old">Staršie ako {year_min} ({old_count})</button>
@@ -205,18 +216,42 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   const grid = document.getElementById('grid');
   const empty = document.getElementById('empty');
   const cards = Array.from(grid.children);
+  let currentFilter = 'active';
+
+  // Obľúbené: ukladajú sa len v tomto prehliadači (localStorage), kľúčom je ID inzerátu.
+  const FAV_KEY = 'arteon-favs';
+  let favs = new Set();
+  try {{ favs = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]')); }} catch (e) {{}}
+  const saveFavs = () => {{ try {{ localStorage.setItem(FAV_KEY, JSON.stringify([...favs])); }} catch (e) {{}} }};
+  const isFav = c => favs.has(c.dataset.pid);
+
+  function paintFavs() {{
+    cards.forEach(c => {{
+      const on = isFav(c), b = c.querySelector('.fav-btn');
+      b.textContent = on ? '★' : '☆';
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.title = on ? 'Odstrániť z obľúbených' : 'Pridať do obľúbených';
+      c.classList.toggle('is-fav', on);
+    }});
+    const favBtn = document.querySelector('.filter-btn[data-filter="fav"]');
+    favBtn.textContent = '★ Obľúbené (' + cards.filter(isFav).length + ')';
+  }}
 
   function applyFilter(filter) {{
     // Priorita kategórií (rovnaká ako v render.py počítaní): sold > color > old > active.
     // Auto, ktoré je aj staršie AJ červené/modré, sa zaradí pod "Červené/Modré",
     // nie pod obe naraz - tab-filtre sú navzájom sa vylučujúce (okrem "Všetky").
+    // "fav" je výnimka - nezávisí od kategórie, zobrazí VŠETKO obľúbené bez ohľadu na stav.
+    currentFilter = filter;
     let visibleCount = 0;
     cards.forEach(c => {{
       const isSold = c.classList.contains('card-sold');
       const isColor = c.classList.contains('card-color');
       const isOld = c.classList.contains('card-old');
       let show;
-      if (filter === 'all') show = true;
+      if (filter === 'fav') show = isFav(c);
+      else if (filter === 'all') show = true;
       else if (filter === 'sold') show = isSold;
       else if (filter === 'color') show = !isSold && isColor;
       else if (filter === 'old') show = !isSold && !isColor && isOld;
@@ -235,6 +270,14 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     }});
   }});
 
+  grid.addEventListener('click', e => {{
+    const b = e.target.closest('.fav-btn');
+    if (!b) return;
+    const c = b.closest('.card');
+    if (favs.has(c.dataset.pid)) favs.delete(c.dataset.pid); else favs.add(c.dataset.pid);
+    saveFavs(); paintFavs(); applySort(); applyFilter(currentFilter);
+  }});
+
   // Radenie - dve tlačidlá (cena / km), každé so svojím smerom, aktívne je
   // vždy len jedno naposledy kliknuté pole.
   const sortBtns = document.querySelectorAll('.sort-btn');
@@ -242,6 +285,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 
   function applySort() {{
     const sorted = cards.slice().sort((a, b) => {{
+      const fa = isFav(a), fb = isFav(b);
+      if (fa !== fb) return fa ? -1 : 1;  // obľúbené vždy na začiatku
       const pa = parseFloat(a.dataset[sortState.field]) || 0;
       const pb = parseFloat(b.dataset[sortState.field]) || 0;
       return sortState.asc ? pa - pb : pb - pa;
@@ -271,7 +316,9 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     }});
   }});
 
+  paintFavs();
   updateSortLabels();
+  applySort();
   applyFilter('active');
 </script>
 </body>
